@@ -1,0 +1,470 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="Data C88C: Computational Structures in Data Science" />
+    <meta name="keywords" content ="Computer Science, Programming, Berkeley, EECS" />
+    <meta name="author" content ="Eric Kim" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/su25/assets/js/hl.js"></script>
+    <script src="/su25/assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="/su25/assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+    <link rel="stylesheet" href="/su25/assets/css/style.css">
+    <link rel="stylesheet" href="/su25/assets/css/mono-blue.css">
+    <link rel="icon" href="/su25/assets/images/favicon.ico">
+
+    
+
+    <title>
+Study Guide: Macros | Data C88C Summer 2025
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/su25/">
+            Data C88C
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="/assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="/su25/">Schedule</a></li>
+            
+            <li><a href="/su25/articles/about-c88c/">Syllabus</a></li>
+            
+            <li><a href="https://edstem.org/us/courses/79702/discussion/">Ed</a></li>
+            
+            <li><a href="/su25/office-hours/">Google Calendar</a></li>
+            
+            <li><a href="/su25/articles/contact-c88c/">Contact</a></li>
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Links
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://www.gradescope.com/courses/1053326">Gradescope</a></li>
+                
+                <li><a href="https://bcourses.berkeley.edu/courses/1545181/external_tools/90481">Lecture Recordings</a></li>
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://bcourses.berkeley.edu/courses/1545181/">bCourses</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Resources
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="/su25/resources/">Past Exams & Websites</a></li>
+                
+                <li><a href="https://www.composingprograms.com">Textbook</a></li>
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">Debugging Guide</a></li>
+                
+                <li><a href="/su25/articles/studying/">Studying Guide</a></li>
+                
+                <li><a href="/su25/articles/composition/">Composition Guide</a></li>
+                
+                <li><a href="/su25/articles/campus-res/">Campus Resources</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="/su25/instructor">Instructors</a></li>
+                
+                <li><a href="/su25/staff">TAs & Tutors</a></li>
+                
+              </ul>
+            </li>
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Study Guide: Macros
+
+        
+        
+        
+      </h1>
+    </header>
+    
+<div class="alert storable-login-status"></div>
+
+<h2>Instructions</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+<h1 id="macro-procedures">Macro Procedures</h1>
+
+<p>Adapted from Rachel's full Macro Procedures study guide, which can be found <a href="https://docs.google.com/document/d/1-AYfeYT2YtCaQd13MegSH8Jh-ZlxhcE6_XxMYcJgeds/edit">here</a>.</p>
+
+<p><em>Objectives: Understand what it means to treat an expression as data, the differences compared to regular Scheme procedures, and strategies for writing macro procedures.</em></p>
+
+
+<h2 id="list-construction">List Construction</h2>
+
+
+<p>To get started, we'll review a few ways of constructing lists in Scheme. These aren't all the ways to create lists in Scheme.</p>
+
+
+<h3 id="using-list">Using <code>list</code></h3>
+
+
+<p>When drawing a box and pointer diagram for a list expression, the first step is to count the number of elements being passed in. This will tell us how many pairs will be included in our diagram. We’ll use an example to demonstrate this: <code>(list 4 5 6)</code>
+We’ve passed in three elements to list, so we’ll start off by drawing three connected pairs with nil at the end:</p>
+
+<p><img class="img-responsive center-block" src="assets/box1.png" alt="empty pairs" width="" height=""></p>
+
+<p>At this point, we can fill in the specified values in the three open spots:
+<img class="img-responsive center-block" src="assets/box2.png" alt="filled pairs" width="" height=""></p>
+
+<p>What if our list was a bit more complex? <code>(list 8 (list 3 4))</code>
+Since there are two elements being passed in, we’ll draw two connected pairs:
+<img class="img-responsive center-block" src="assets/box3.png" alt="empty pairs" width="" height="">
+There were two elements passed into list: 8 and another list. As 8 was the first element, we place it in the first spot. We use a pointer to the list containing 3 and 4 in the second spot to represent the nested list as our second element.
+<img class="img-responsive center-block" src="assets/box4.png" alt="nested list" width="" height=""></p>
+
+
+<h3 id="using-quote">Using <code>quote</code></h3>
+
+
+<p>We can also create lists with single quotes! Remember that single quotes return everything to the right of the quote, unevaluated. For example:</p>
+
+<pre><code class="scheme">scm&gt; ‘(1 2 3)
+(1 2 3)</code></pre>
+
+
+
+
+<h3 id="using-quasiquote-and-unquote">Using <code>quasiquote</code> and <code>unquote</code></h3>
+
+
+<p>Quasiquotes (backtick symbol `) work very similarly to quotes. The key difference is that they give us the ability to use unquotes (comma symbol ,). When we place a quasiquote outside an expression, we still get a list of all the elements, though any elements that are unquoted are evaluated. For example:</p>
+
+<pre><code class="scheme">scm&gt; (define x 6)
+x
+scm&gt; (define y 1)
+y
+scm&gt; `(,x ,y a)
+(6 1 a)</code></pre>
+
+
+
+
+<h2 id="input-and-output">Input and Output</h2>
+
+<p>Using the regular Scheme procedures we’ve seen so far, we could always say that (foo 15)<code></code> was equivalent to <code>(foo (* 3 5))</code>. Why is this? Well, to evaluate any call expression to a regular Scheme procedure, we have the following set of rules:</p>
+
+<ol>
+  <li>Evaluate operator to a regular procedure</li>
+  <li>Evaluate operand expressions</li>
+  <li>Apply the procedure to evaluated operand(s)</li>
+</ol>
+
+<p>For the first call expression, to evaluate it we would evaluate the foo function, evaluate 15 to the value 15, and then apply foo to 15. For the second expression, we would evaluate the foo function, evaluate <code>(* 3 5)</code> to the value 15, and then apply foo to 15. The key takeaway here is that for regular Scheme procedures, our operands are always evaluated to values. Since during the apply step the body of the procedure is evaluated as well, the output of our procedure will always be a value as well. We can visualize this with the following diagram:</p>
+
+<p><img class="img-responsive center-block" src="assets/expr_eval.png" alt="Macro evaluation" width="" height=""></p>
+
+<p>The body of our procedure can do whatever we like--most of the time it’s some sort of calculation--though what’s important is that our procedures take values as input, do some work, and return values as output.</p>
+
+<p>Up until now, we’ve treated values as data. We could manipulate those values, use them to calculate things, or whatever we like. Expressions are automatically evaluated in Scheme, so in order to work with the expressions themselves (instead of what they evaluate to) we need to halt this evaluation and store the expression itself as data.
+Since everything in Scheme besides primitives are lists, we can store those expressions as lists. Meaning, the expression (+ 1 2) is stored like the following:
+<img class="img-responsive center-block" src="assets/box5.png" alt="Expression List" width="" height=""></p>
+
+<p>Now we’ll take a look at macro procedures! Instead of the rules of evaluating call expression for regular procedures as seen above, we’ll use the following rules:</p>
+
+<ol>
+  <li>Evaluate operator to a macro procedure</li>
+  <li>Apply macro procedure to the operand expressions</li>
+  <li>Evaluate the expression returned by the macro procedure in the frame it was called in</li>
+</ol>
+
+<p>We can visualize this with the following diagram:
+<img class="img-responsive center-block" src="assets/macro_eval.png" alt="Macro evaluation" width="" height=""></p>
+
+<p>Macro procedures take expressions as input, similar to the regular procedures, although the key difference is they are not evaluated before running the body of the procedure. When we write macro procedures, instead of thinking “what should the behavior of my procedure be?” think “how do I construct a list that represents the behavior of my procedure?”.</p>
+
+
+<h2 id="what-we-can-do-with-macros">What we can do with Macros</h2>
+
+<p>The only reason the special forms in Scheme are special is because they all have unique evaluation rules. For example, if we tried to call <code>if</code> as a procedure, we’d end up evaluating if as the operator, we’d evaluate the <code>if&#x2d;true</code> and <code>if&#x2d;false</code> expressions as the operands, and then apply the function to the operands. Doing this causes us to lose the invariants that define if statements because we only want at most one of the clauses to be evaluated, never both of them at the same time.</p>
+
+<p>With macros, we can take advantage of the fact that none of the operands get evaluated when it’s called and create our own unique evaluation rules. We can control which operand expressions are evaluated and when, which means we can even design our own special forms! We’ll walk through a few examples on how to do exactly this in the next section.</p>
+
+
+<h2 id="approaching-macro-procedures">Approaching Macro Procedures</h2>
+
+<p>Before we get started, here’s a rough outline on the steps to writing a macro procedure:</p>
+
+<ol>
+  <li>Take the data that you’re given (could be lists, or other expressions) and draw out the box and pointer diagram to represent it if applicable.</li>
+  <li>Write the Scheme code that accomplishes what the procedure should do</li>
+  <li>Use the body of the macro procedure to construct that code in a list. It represents the code that’ll eventually be evaluated.</li>
+</ol>
+
+
+<h1 id="practice-problems">Practice Problems</h1>
+
+
+
+<h3 id="q1-make-and">Q1: Make And</h3>
+
+
+<p>Implement <code>make&#x2d;and</code>, a macro procedure that behaves like our and special form and accepts two arguments, returning either the first false-y value or the last truth-y value.</p>
+
+<p><code>make&#x2d;and</code> should have the following functionality (it should short-circuit!):</p>
+
+<pre><code class="scheme">scm&gt; (make&#x2d;and 4 5)
+5
+scm&gt; (make&#x2d;and #f (/ 1 0))
+#f</code></pre>
+
+
+
+
+
+<pre><code>(define&#x2d;macro (make&#x2d;and arg1 arg2)
+<div class="alt solution-1">    'YOUR-CODE-HERE
+</div><div class="solution solution-1">&#x20;&#x20;&#x20;&#x20;&#x60;&#x28;&#x61;&#x6e;&#x64;&#x20;&#x2c;&#x61;&#x72;&#x67;&#x31;&#x20;&#x2c;&#x61;&#x72;&#x67;&#x32;&#x29;</div>)</code></pre>
+
+
+        <button id='solution-1' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<h3 id="q2-cond-false">Q2: Cond False</h3>
+
+<p>Implement <code>cond&#x2d;false</code>, which works similarly to the built-in special form <code>cond</code>, though instead will evaluate only the second sub-expression of the first falsey condition (whereas cond evaluates the second sub-expression to the first truthy condition). Our input will also be a list of clauses instead of a variable number of clauses, to make the problem a bit easier. Feel free to define any helper functions or use any built-ins necessary. Here are a few examples of how <code>cond&#x2d;false</code> should function:</p>
+
+<pre><code class="scheme">scm&gt; (cond&#x2d;false ( ((= 1 2) (* 3 4))
+			((= 3 3) (* 8 9)) )
+          )
+12
+
+scm&gt; (cond&#x2d;false ( ((= 5 5) (print 5))
+			((even? 7) (print 7)) )
+          )
+7
+scm&gt; (cond&#x2d;false ( (#f ‘sun)
+			((/ 1 0)  ‘moon) )
+          )
+sun</code></pre>
+
+
+
+
+
+<pre><code><div class="alt solution-2">'YOUR-CODE-HERE
+; write any helpers you need here
+</div><div class="solution solution-2">&#x28;&#x64;&#x65;&#x66;&#x69;&#x6e;&#x65;&#x20;&#x28;&#x63;&#x6f;&#x6e;&#x76;&#x65;&#x72;&#x74;&#x2d;&#x66;&#x61;&#x6c;&#x73;&#x65;&#x20;&#x63;&#x29;&#xa;&#x9;&#x28;&#x69;&#x66;&#x20;&#x28;&#x6e;&#x75;&#x6c;&#x6c;&#x3f;&#x20;&#x6c;&#x73;&#x74;&#x29;&#x20;&#x6e;&#x69;&#x6c;&#xa;&#x9;&#x9;&#x28;&#x63;&#x6f;&#x6e;&#x73;&#x20;&#x28;&#x6c;&#x69;&#x73;&#x74;&#x20;&#x27;&#x65;&#x71;&#x3f;&#x20;&#x23;&#x66;&#x20;&#x28;&#x63;&#x61;&#x72;&#x20;&#x63;&#x29;&#x29;&#x20;&#x28;&#x63;&#x6f;&#x6e;&#x76;&#x65;&#x72;&#x74;&#x2d;&#x66;&#x61;&#x6c;&#x73;&#x65;&#x20;&#x28;&#x63;&#x64;&#x72;&#x20;&#x63;&#x29;&#x29;&#x29;&#xa;&#x9;&#x29;&#xa;&#x29;&#xa;</div>(define&#x2d;macro (cond&#x2d;false clauses)
+<div class="alt solution-2">    'YOUR-CODE-HERE
+</div><div class="solution solution-2">&#x9;&#x28;&#x63;&#x6f;&#x6e;&#x73;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x27;&#x63;&#x6f;&#x6e;&#x64;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x28;&#x7a;&#x69;&#x70;&#x20;&#x28;&#x63;&#x6f;&#x6e;&#x76;&#x65;&#x72;&#x74;&#x2d;&#x66;&#x61;&#x6c;&#x73;&#x65;&#x20;&#x28;&#x6d;&#x61;&#x70;&#x20;&#x63;&#x61;&#x72;&#x20;&#x63;&#x6c;&#x61;&#x75;&#x73;&#x65;&#x73;&#x29;&#x29;&#x20;&#x28;&#x6d;&#x61;&#x70;&#x20;&#x63;&#x61;&#x64;&#x72;&#x20;&#x63;&#x6c;&#x61;&#x75;&#x73;&#x65;&#x73;&#x29;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x29;</div>)</code></pre>
+
+
+        <button id='solution-2' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#macro-procedures">Macro Procedures</a></li>
+  <ul>
+    <li><a href="#list-construction">List Construction</a></li>
+    <ul>
+      <li><a href="#using-list">Using <code>list</code></a></li>
+      <li><a href="#using-quote">Using <code>quote</code></a></li>
+      <li><a href="#using-quasiquote-and-unquote">Using <code>quasiquote</code> and <code>unquote</code></a></li>
+    </ul>
+    <li><a href="#input-and-output">Input and Output</a></li>
+    <li><a href="#what-we-can-do-with-macros">What we can do with Macros</a></li>
+    <li><a href="#approaching-macro-procedures">Approaching Macro Procedures</a></li>
+  </ul>
+  <li><a href="#practice-problems">Practice Problems</a></li>
+  <ul>
+    <li><a href="#q1-make-and">Q1: Make And</a></li>
+    <li><a href="#q2-cond-false">Q2: Cond False</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <!-- <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/weekly">Weekly Schedule</a></li>
+            <li><a href="/office-hours">Office Hours</a></li>
+            <li><a href="/staff">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="/resources">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/articles/studying">Studying Guide</a></li>
+            <li><a href="/articles/debugging">Debugging Guide</a></li>
+            <li><a href="/articles/composition">Composition Guide</a></li>
+            <li><a href="/articles/pair-programming">Pair Programming</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="/articles/about">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/articles/about#assignments">Assignments</a></li>
+            <li><a href="/articles/about#exams">Exams</a></li>
+            <li><a href="/articles/about#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer> -->
+
+    
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/editor/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min'
+      };
+      importScripts('https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
+    <script src="/su25/assets/js/network_storage.js"></script>
+    <script src="/su25/assets/js/code_tabindex.js"></script>
+    <script src="/su25/assets/js/storable.js"></script>
+    <script src="/su25/assets/js/editor.js"></script>
+    <script src="/su25/assets/js/copy-button.js"></script>
+    <script src="/su25/assets/js/env-diagram.js"></script>
+    
+<!-- <script src="/assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+<script type="text/javascript" src="/assets/js/config.js"></script>
+<script>
+$(function() {
+    $('.solutiontoggle').css('display', 'inline-block');
+      $('.solutiontoggle').click(function() {
+        var solution_id = $(this).attr('id');
+        $('div.' + solution_id).slideToggle(600);
+    });
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+});
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="Data C88C: Computational Structures in Data Science" />
+    <meta name="keywords" content ="Computer Science, Programming, Berkeley, EECS" />
+    <meta name="author" content ="Eric Kim" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/su25/assets/js/hl.js"></script>
+    <script src="/su25/assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="/su25/assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+    <link rel="stylesheet" href="/su25/assets/css/style.css">
+    <link rel="stylesheet" href="/su25/assets/css/mono-blue.css">
+    <link rel="icon" href="/su25/assets/images/favicon.ico">
+
+    
+
+    <title>
+Package Manager | Data C88C Summer 2025
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/su25/">
+            Data C88C
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="/assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="/su25/">Schedule</a></li>
+            
+            <li><a href="/su25/articles/about-c88c/">Syllabus</a></li>
+            
+            <li><a href="https://edstem.org/us/courses/79702/discussion/">Ed</a></li>
+            
+            <li><a href="/su25/office-hours/">Google Calendar</a></li>
+            
+            <li><a href="/su25/articles/contact-c88c/">Contact</a></li>
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Links
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://www.gradescope.com/courses/1053326">Gradescope</a></li>
+                
+                <li><a href="https://bcourses.berkeley.edu/courses/1545181/external_tools/90481">Lecture Recordings</a></li>
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://bcourses.berkeley.edu/courses/1545181/">bCourses</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Resources
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="/su25/resources/">Past Exams & Websites</a></li>
+                
+                <li><a href="https://www.composingprograms.com">Textbook</a></li>
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">Debugging Guide</a></li>
+                
+                <li><a href="/su25/articles/studying/">Studying Guide</a></li>
+                
+                <li><a href="/su25/articles/composition/">Composition Guide</a></li>
+                
+                <li><a href="/su25/articles/campus-res/">Campus Resources</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="/su25/instructor">Instructors</a></li>
+                
+                <li><a href="/su25/staff">TAs & Tutors</a></li>
+                
+              </ul>
+            </li>
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>Package Manager</h1>
+    </header>
+     <p>A package manager is a tool to automate the installation process of
+computer programs. Popular choices are <a href="http://brew.sh">Homebrew</a> on Mac OS
+X, <a href="https://help.ubuntu.com/community/AptGet/Howto">apt</a> on Ubuntu and <a href="https://chocolatey.org">Chocolatey</a> on Windows.</p>
+
+
+<h3 id="homebrew-os-x">Homebrew (OS X)</h3>
+
+
+
+<h4 id="setup-homebrew">Setup Homebrew</h4>
+
+
+<ol>
+  <li><p>Fire up the built-in <code>Terminal</code> application from your Mac, and paste
+  the following command into it. (You can always use the search button
+  located on the top left cornor on your Mac to find <code>Terminal</code>)</p>
+
+<pre><code>ruby &#x2d;e &quot;$(curl &#x2d;fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</code></pre>
+
+  <p>Note that this might take a while, especially when installing Xcode
+  Command Line tools.</p></li>
+  <li><p>Then paste the following command into the same terminal window and
+  press <code>Enter</code>.</p>
+
+<pre><code>echo &#x27;export PATH=&quot;/usr/local/bin:$PATH&quot;&#x27; &gt;&gt; ~/.bash_profile</code></pre></li>
+  <li><strong>Close the current terminal window.</strong></li>
+</ol>
+
+
+<h4 id="use-homebrew">Use Homebrew</h4>
+
+
+<p>Open up another terminal window. Enter the following command and press
+Enter:</p>
+
+<pre><code>brew update</code></pre>
+
+<p>Which updates Homebrew itself, all the formulae it contains and install
+<a href="https://git-scm.com/">git</a> onto your Mac.</p>
+
+<p>Now, you can easily install <code>Python 3</code> by <code>brew install python3</code>.
+However, due to some compatibility issues, it's the best that we use
+<code>Python 3.4</code>, instead of the latest version. To obtain and install the
+formula of <code>Python 3.4</code>, enter the following command into the terminal:</p>
+
+<pre><code>brew tap 20015jjw/python34
+brew install python34
+python3 &#x2d;&#x2d;version</code></pre>
+
+<p>Since this is not an official formula, you will see an error. Let it
+be. In the end when all the command finishes (you might need to press
+<code>Enter</code> once more to execute the last command), you should see this
+line on the screen:</p>
+
+<pre><code>Wills&#x2d;Mac&#x2d;Pro:src Will$ python3 &#x2d;&#x2d;version
+Python 3.4.4</code></pre>
+
+<p>As you can see, <code>Python 3.4.4</code> is installed on your Mac and can be
+accessed by typing <code>python3</code> into a terminal window.</p>
+
+
+<h4 id="more-usage-amp-mac-setup">More Usage &amp; Mac Setup</h4>
+
+
+<p>To setup your Mac OS X properly for development, you can consult <a href="http://sourabhbajaj.com/mac-setup/index.html">this
+book by Sourabh</a>. It covers many useful tips for setting up
+different kinds of development environment. You should definitely take
+a look at the <code>Cask</code> section under Chapter 3, as it allows you to
+install almost all the useful applications with a single line of code.</p>
+
+
+<h3 id="chocolatey-windows">Chocolatey (Windows)</h3>
+
+
+
+<h4 id="install-chocolatey">Install Chocolatey</h4>
+
+
+<ol>
+  <li>Open the start menu, enter <code>cmd.exe</code> and right-click on it to run it
+  as administrator.</li>
+  <li><p>Paste the following command into the command line window and press
+  <code>Enter</code> (The line is really long, and <strong>right-click on the terminal to paste</strong>):</p>
+
+<pre><code>@powershell &#x2d;NoProfile &#x2d;ExecutionPolicy Bypass &#x2d;Command &quot;iex ((new&#x2d;object net.webclient).DownloadString(&#x27;https://chocolatey.org/install.ps1&#x27;))&quot; &amp;&amp; SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin</code></pre></li>
+  <li>Restart the shell (Command Line Prompt, Gitbash or Cmder)</li>
+</ol>
+
+
+<h4 id="use-chocolatey">Use Chocolatey</h4>
+
+
+<p>Simply run the following command in a shell <strong>that runs as
+Administrator</strong> to install <code>Python 3.4</code>:</p>
+
+<pre><code>choco install python &#x2d;v 3.4.3</code></pre>
+
+<p><img class="img-responsive center-block" src="assets/python-choco.png" alt="Install Python with Choco" width="" height=""></p>
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#homebrew-os-x">Homebrew (OS X)</a></li>
+  <ul>
+    <li><a href="#setup-homebrew">Setup Homebrew</a></li>
+    <li><a href="#use-homebrew">Use Homebrew</a></li>
+    <li><a href="#more-usage-amp-mac-setup">More Usage &amp; Mac Setup</a></li>
+  </ul>
+  <li><a href="#chocolatey-windows">Chocolatey (Windows)</a></li>
+  <ul>
+    <li><a href="#install-chocolatey">Install Chocolatey</a></li>
+    <li><a href="#use-chocolatey">Use Chocolatey</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <!-- <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/weekly">Weekly Schedule</a></li>
+            <li><a href="/office-hours">Office Hours</a></li>
+            <li><a href="/staff">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="/resources">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/articles/studying">Studying Guide</a></li>
+            <li><a href="/articles/debugging">Debugging Guide</a></li>
+            <li><a href="/articles/composition">Composition Guide</a></li>
+            <li><a href="/articles/pair-programming">Pair Programming</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="/articles/about">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/articles/about#assignments">Assignments</a></li>
+            <li><a href="/articles/about#exams">Exams</a></li>
+            <li><a href="/articles/about#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer> -->
+
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/editor/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min'
+      };
+      importScripts('https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
+    <script src="/su25/assets/js/network_storage.js"></script>
+    <script src="/su25/assets/js/code_tabindex.js"></script>
+    <script src="/su25/assets/js/storable.js"></script>
+    <script src="/su25/assets/js/editor.js"></script>
+    <script src="/su25/assets/js/copy-button.js"></script>
+    <script src="/su25/assets/js/env-diagram.js"></script>
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
+<script src="/su25/assets/js/storable.js"></script>
+<script src="/su25/assets/js/env-diagram.js"></script>
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+</script>
+
+  </body>
+</html>
