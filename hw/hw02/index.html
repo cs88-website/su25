@@ -33,10 +33,12 @@
 
     
 
-<link rel="stylesheet" type="text/css" href="/su25/assets/css/lecture.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/hw.css">
 
 
-    <title>Data C88C Summer 2025</title>
+    <title>
+Homework 2 | Data C88C Summer 2025
+</title>
   </head>
 
   <body id="index" class="home">
@@ -136,25 +138,206 @@
   <div class='col-md-9'>
     <header>
       <h1>
-        Functions
+        
+Homework 2: Control
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="hw02.zip" class="label label-outline">hw02.zip</a></li>
+        </ul>
+        
+        
       </h1>
-      <p>
-        Topics covered: <a href="/resources#functions" target="_blank">Functions</a> 
-      </p>
     </header>
+    
 
-    <h2 id="prerecorded"><a href="#playlist">Lecture Playlist</a></h2>
-    <iframe width="886" height="498" src="https://www.youtube.com/embed/zYC7tKfKPtM?list=PLx38hZJ5RLZdLilndcPoBVWg20S_VENyu&index=2&rel=0" title="Lecture playlist" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p><em>Due by 11:59pm on Tuesday, July 1</em></p>
 
-    <ul class="inline-block list-inline title-tags">
-      
-          <a href="https://www.youtube.com/watch?v=zYC7tKfKPtM&list=PLx38hZJ5RLZdLilndcPoBVWg20S_VENyu&index=2" class="label label-outline" target="_blank">Videos</a>
-      
-          <a href="/assets/slides/02-Functions.pdf" class="label label-outline" target="_blank">Slides (pdf)</a>
-      
-          <a href="/assets/slides/02.py" class="label label-outline" target="_blank">02.py</a>
-      
-    </ul>
+
+
+
+
+<h2>Instructions</h2>
+
+<p>Download <a href="hw02.zip">hw02.zip</a>.</p>
+
+<p><strong>Submission:</strong> When you are done, submit the assignment by uploading all code files you've edited to Gradescope. You may submit more than once before the deadline; only the
+final submission will be scored. Check that you have successfully submitted
+your code on Gradescope.  See <a
+  href="/su25/lab/lab00">Lab 0</a> for more instructions on
+submitting assignments.</p>
+
+<p><strong>Using Ok:</strong> If you have any questions about using Ok, please
+refer to <a href="/su25/articles/using-ok">this guide.</a>
+
+
+  <p><strong>Readings:</strong> You might find the following references
+  useful:</p>
+  <ul>
+  <li><a href="https://www.composingprograms.com/pages/15-control.html">Section 1.5</a></li>
+</ul>
+  
+
+<p><strong>Grading:</strong> Homework is graded based on
+correctness. Each incorrect problem will decrease the total score by one point.
+<strong>This homework is out of 2 points.</strong>
+
+
+
+
+    
+<br />
+
+
+<h1 id="required-questions">Required Questions</h1>
+
+
+
+<h3 id="q1-divisible-by-k">Q1: Divisible By k</h3>
+
+
+<p>Write a function <code>divisible_by_k</code> that takes positive integers <code>n</code> and <code>k</code>. It prints all positive integers less than or equal to <code>n</code> that are divisible by <code>k</code> from smallest to largest. Then, it returns how many numbers were printed.</p>
+
+<solution>
+
+<pre><code>def divisible_by_k(n, k):
+    &quot;&quot;&quot;
+    &gt;&gt;&gt; a = divisible_by_k(10, 2)  # 2, 4, 6, 8, and 10 are divisible by 2
+    2
+    4
+    6
+    8
+    10
+    &gt;&gt;&gt; a
+    5
+    &gt;&gt;&gt; b = divisible_by_k(3, 1)  # 1, 2, and 3 are divisible by 1
+    1
+    2
+    3
+    &gt;&gt;&gt; b
+    3
+    &gt;&gt;&gt; c = divisible_by_k(6, 7)  # There are no integers up to 6 that are divisible by 7
+    &gt;&gt;&gt; c
+    0
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q divisible_by_k<button id="copy-code-python3ok-qdivisible_by_k" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qdivisible_by_k").onclick = () => copyCode('python3 ok -q divisible_by_k', "copy-code-python3ok-qdivisible_by_k");
+        </script>
+        <br/>
+
+
+<h3 id="q2-hailstone">Q2: Hailstone</h3>
+
+
+<p>Douglas Hofstadter's Pulitzer-prize-winning book, <em>Gödel, Escher, Bach</em>, poses
+the following mathematical puzzle.</p>
+
+<ol>
+  <li>Pick a positive integer <code>n</code> as the start.</li>
+  <li>If <code>n</code> is even, divide it by 2.</li>
+  <li>If <code>n</code> is odd, multiply it by 3 and add 1.</li>
+  <li>Continue this process until <code>n</code> is 1.</li>
+</ol>
+
+<p>The number <code>n</code> will travel up and down but eventually end at 1 (at least for
+all numbers that have ever been tried—nobody has ever proved that the
+sequence will terminate). Analogously, a hailstone travels up and down in the
+atmosphere before eventually landing on earth.</p>
+
+<p>This sequence of values of <code>n</code> is often called a Hailstone sequence. Write a
+function that takes a single argument with formal parameter name <code>n</code>, prints
+out the hailstone sequence starting at <code>n</code>, and returns the number of steps in
+the sequence:</p>
+
+<pre><code>def hailstone(n):
+    &quot;&quot;&quot;Print the hailstone sequence starting at n and return its
+    length.
+
+    &gt;&gt;&gt; a = hailstone(10)
+    10
+    5
+    16
+    8
+    4
+    2
+    1
+    &gt;&gt;&gt; a
+    7
+    &gt;&gt;&gt; b = hailstone(1)
+    1
+    &gt;&gt;&gt; b
+    1
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+<p>Hailstone sequences can get quite long! Try 27. What's the longest you can
+find?</p>
+
+<blockquote><p>Note that if <code>n == 1</code> initially, then the sequence is one step long. <br>
+<strong>Hint:</strong> If you see 4.0 but want just 4, try using floor division <code>//</code> instead of regular division <code>/</code>.</p></blockquote>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q hailstone<button id="copy-code-python3ok-qhailstone" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qhailstone").onclick = () => copyCode('python3 ok -q hailstone', "copy-code-python3ok-qhailstone");
+        </script>
+        <br/>
+
+<p><strong>Curious about hailstone sequences? Take a look at this article:</strong></p>
+
+<ul>
+  <li>In 2019, there was a major <a href="https://www.quantamagazine.org/mathematician-terence-tao-and-the-collatz-conjecture-20191211/">development</a> in understanding how the hailstone conjecture works for most numbers!</li>
+</ul>
+
+
+
+
+<h2 id="check-your-score-locally">Check Your Score Locally</h2>
+
+<p>You can locally check your score on each question of this assignment by running</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+<p><strong>This does NOT submit the assignment!</strong> When you are satisfied with your score, submit the assignment to Gradescope to receive credit for it.</p>
+
+
+<h1 id="submit-assignment">Submit Assignment</h1>
+
+
+<p>Submit this assignment by uploading any files you've edited <strong>to the appropriate Gradescope assignment.</strong> <a href="/su25/lab/lab00">Lab 00</a> has detailed instructions.</p>
+
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#required-questions">Required Questions</a></li>
+  <ul>
+    <li><a href="#q1-divisible-by-k">Q1: Divisible By k</a></li>
+    <li><a href="#q2-hailstone">Q2: Hailstone</a></li>
+  </ul>
+  <ul>
+    <li><a href="#check-your-score-locally">Check Your Score Locally</a></li>
+  </ul>
+  <li><a href="#submit-assignment">Submit Assignment</a></li>
+</ul>
+    </nav>
   </div>
 </div>
 
@@ -191,6 +374,7 @@
     </footer> -->
 
     
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/loader.min.js"></script>
   <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/editor/editor.main.min.css">
   <script>
@@ -211,5 +395,40 @@
     <script src="/su25/assets/js/copy-button.js"></script>
     <script src="/su25/assets/js/env-diagram.js"></script>
     
+<!-- <script src="/assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
   </body>
 </html>
