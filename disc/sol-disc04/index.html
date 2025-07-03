@@ -1,0 +1,597 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="Data C88C: Computational Structures in Data Science" />
+    <meta name="keywords" content ="Computer Science, Programming, Berkeley, EECS" />
+    <meta name="author" content ="Eric Kim" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/su25/assets/js/hl.js"></script>
+    <script src="/su25/assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="/su25/assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+    <link rel="stylesheet" href="/su25/assets/css/style.css">
+    <link rel="stylesheet" href="/su25/assets/css/mono-blue.css">
+    <link rel="icon" href="/su25/assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="/assets/css/disc.css">
+
+
+    <title>
+Discussion 4 | Data C88C Summer 2025
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/su25/">
+            Data C88C
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="/assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="/su25/">Schedule</a></li>
+            
+            <li><a href="/su25/articles/about-c88c/">Syllabus</a></li>
+            
+            <li><a href="https://edstem.org/us/courses/79702/discussion/">Ed</a></li>
+            
+            <li><a href="/su25/office-hours/">Google Calendar</a></li>
+            
+            <li><a href="/su25/articles/contact-c88c/">Contact</a></li>
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Links
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://www.gradescope.com/courses/1053326">Gradescope</a></li>
+                
+                <li><a href="https://bcourses.berkeley.edu/courses/1545181/external_tools/90481">Lecture Recordings</a></li>
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://bcourses.berkeley.edu/courses/1545181/">bCourses</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Resources
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="/su25/resources/">Past Exams & Websites</a></li>
+                
+                <li><a href="https://www.composingprograms.com">Textbook</a></li>
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">Debugging Guide</a></li>
+                
+                <li><a href="/su25/articles/studying/">Studying Guide</a></li>
+                
+                <li><a href="/su25/articles/composition/">Composition Guide</a></li>
+                
+                <li><a href="/su25/articles/campus-res/">Campus Resources</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="/su25/instructor">Instructors</a></li>
+                
+                <li><a href="/su25/staff">TAs & Tutors</a></li>
+                
+              </ul>
+            </li>
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Discussion 4: Recursion
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="disc04.pdf" class="label label-outline">disc04.pdf</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<!-- <div class="alert storable-login-status"></div> -->
+
+
+    
+<h1 id="recursion">Recursion</h1>
+
+
+<p>Many students find this topic challenging. Everything gets easier with practice. Please help each other learn.</p>
+
+
+<h3 id="q1-swipe">Q1: Swipe</h3>
+
+
+<p>Implement <code>swipe</code>, which prints the digits of argument <code>n</code>, one per line, <strong>first backward then forward</strong>. The left-most digit is printed only once. <strong>Do not use <code>while</code> or <code>for</code> or <code>str</code>.</strong> (Use recursion, of course!)</p>
+
+
+            
+            <b>Your Answer</b>
+            
+            <div class="monaco-storable" id="swipe-input" style="height:378px;"></div>
+            <a href="javascript:void" id="modal-link-swipe-input">Run in 61A Code</a>
+            <div class="modal fade" id="modal-swipe-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-swipe-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def swipe(n):\n    &quot;&quot;&quot;Print the digits of n, one per line, first backward then forward.\n\n    &gt;&gt;&gt; swipe(2837)\n    7\n    3\n    8\n    2\n    8\n    3\n    7\n    &quot;&quot;&quot;\n    if n &lt; 10:\n        print(n)\n    else:\n        "*** YOUR CODE HERE ***"\n\n', "python", "swipe-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>Solution</b>
+                
+<pre><code>def swipe(n):
+    &quot;&quot;&quot;Print the digits of n, one per line, first backward then forward.
+
+    &gt;&gt;&gt; swipe(2837)
+    7
+    3
+    8
+    2
+    8
+    3
+    7
+    &quot;&quot;&quot;
+    if n &lt; 10:
+        print(n)
+    else:
+        print(n % 10)
+        swipe(n // 10)
+        print(n % 10)
+</code></pre>
+
+            </div>
+        
+
+<!-- 
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-1">
+First <code>print</code> the first line of the output, then make a recursive call, then <code>print</code> the last line of the output.
+</div> -->
+
+<div class="page-break"></div>
+
+
+<h3 id="q2-skip-factorial">Q2: Skip Factorial</h3>
+
+
+<p>Define the base case for the <code>skip_factorial</code> function, which returns the product of <strong>every other positive integer</strong>, starting with <code>n</code>.</p>
+
+
+            
+            <b>Your Answer</b>
+            
+            <div class="monaco-storable" id="skip_factorial-input" style="height:270px;"></div>
+            <a href="javascript:void" id="modal-link-skip_factorial-input">Run in 61A Code</a>
+            <div class="modal fade" id="modal-skip_factorial-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-skip_factorial-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def skip_factorial(n):\n    &quot;&quot;&quot;Return the product of positive integers n * (n &#x2d; 2) * (n &#x2d; 4) * ...\n\n    &gt;&gt;&gt; skip_factorial(5) # 5 * 3 * 1\n    15\n    &gt;&gt;&gt; skip_factorial(8) # 8 * 6 * 4 * 2\n    384\n    &quot;&quot;&quot;\n    if ___:\n        return ___\n    else:\n        return ___\n\n', "python", "skip_factorial-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>Solution</b>
+                
+<pre><code>def skip_factorial(n):
+    &quot;&quot;&quot;Return the product of positive integers n * (n &#x2d; 2) * (n &#x2d; 4) * ...
+
+    &gt;&gt;&gt; skip_factorial(5) # 5 * 3 * 1
+    15
+    &gt;&gt;&gt; skip_factorial(8) # 8 * 6 * 4 * 2
+    384
+    &quot;&quot;&quot;
+    if n &lt;= 2:
+        return n
+    else:
+        return n * skip_factorial(n &#x2d; 2)
+</code></pre>
+
+            </div>
+        
+
+<!-- 
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-2">
+If <code>n</code> is even, then the base case will be 2. If <code>n</code> is odd, then the base case will be 1. Try to write a condition that handles both possibilities.
+</div> -->
+
+<div class="page-break"></div>
+
+
+<h3 id="q3-recursive-hailstone">Q3: Recursive Hailstone</h3>
+
+
+<p>Recall the <code>hailstone</code> function from <a href="/hw/hw01/">Homework 1</a>.
+First, pick a positive integer <code>n</code> as the start. If <code>n</code> is even, divide it by 2.
+If <code>n</code> is odd, multiply it by 3 and add 1. Repeat this process until <code>n</code> is 1.
+Complete this recursive version of <code>hailstone</code> that prints out the values of the
+sequence and returns the number of steps.</p>
+
+
+            
+            <b>Your Answer</b>
+            
+            <div class="monaco-storable" id="recursive-hailstone-input" style="height:630px;"></div>
+            <a href="javascript:void" id="modal-link-recursive-hailstone-input">Run in 61A Code</a>
+            <div class="modal fade" id="modal-recursive-hailstone-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-recursive-hailstone-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def hailstone(n):\n    &quot;&quot;&quot;Print out the hailstone sequence starting at n, \n    and return the number of elements in the sequence.\n    &gt;&gt;&gt; a = hailstone(10)\n    10\n    5\n    16\n    8\n    4\n    2\n    1\n    &gt;&gt;&gt; a\n    7\n    &gt;&gt;&gt; b = hailstone(1)\n    1\n    &gt;&gt;&gt; b\n    1\n    &quot;&quot;&quot;\n    print(n)\n    if n % 2 == 0:\n        return even(n)\n    else:\n        return odd(n)\n\ndef even(n):\n    return ____\n\ndef odd(n):\n    "*** YOUR CODE HERE ***"\n\n', "python", "recursive-hailstone-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>Solution</b>
+                
+<pre><code>def hailstone(n):
+    &quot;&quot;&quot;Print out the hailstone sequence starting at n, 
+    and return the number of elements in the sequence.
+    &gt;&gt;&gt; a = hailstone(10)
+    10
+    5
+    16
+    8
+    4
+    2
+    1
+    &gt;&gt;&gt; a
+    7
+    &gt;&gt;&gt; b = hailstone(1)
+    1
+    &gt;&gt;&gt; b
+    1
+    &quot;&quot;&quot;
+    print(n)
+    if n % 2 == 0:
+        return even(n)
+    else:
+        return odd(n)
+
+def even(n):
+    return 1 + hailstone(n // 2)
+
+def odd(n):
+    if n == 1:
+        return 1
+    else:
+        return 1 + hailstone(3 * n + 1)
+</code></pre>
+
+            </div>
+        
+
+<!-- 
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-3">
+An even number is never a base case, so <code>even</code> always makes a recursive call to <code>hailstone</code> and returns one more than the length of the rest of the hailstone sequence.
+
+<p>An odd number might be 1 (the base case) or greater than one (the recursive case). Only the recursive case should call <code>hailstone</code>.
+</div> --></p>
+
+<div class="page-break"></div>
+
+<!-- (dataC88C su25: no attendance checks) -->
+<!-- # Document the Occasion
+
+Please all fill out the <a href="https://go.c88c.org/here">attendance form</a> (one submission per person per week). -->
+
+<div class="page-break"></div>
+
+
+<h1 id="extra-questions">Extra Questions</h1>
+
+
+<p>The questions below are <strong>optional but recommended</strong> if you would like some extra practice.</p>
+
+
+<h3 id="q4-is-prime">Q4: Is Prime</h3>
+
+
+<p>Implement <code>is_prime</code> that takes an integer <code>n</code> greater than 1. It returns <code>True</code>
+if <code>n</code> is a prime number and <code>False</code> otherwise. Try following the approach
+below, but implement it recursively without using a <code>while</code> (or <code>for</code>)
+statement.</p>
+
+<pre><code>def is_prime(n):
+    assert n &gt; 1
+    i = 2
+    while i &lt; n:
+        if n % i == 0:
+            return False
+        i = i + 1
+    return True</code></pre>
+
+
+
+<p>You will need to define another "helper" function (a function that exists just
+to help implement this one). Does it matter whether you define it within
+<code>is_prime</code> or  as a separate function in the global frame? Try to define it to
+take as few arguments as possible.</p>
+
+
+            
+            <b>Your Answer</b>
+            
+            <div class="monaco-storable" id="is-prime-input" style="height:360px;"></div>
+            <a href="javascript:void" id="modal-link-is-prime-input">Run in 61A Code</a>
+            <div class="modal fade" id="modal-is-prime-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-is-prime-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def is_prime(n):\n    &quot;&quot;&quot;Returns True if n is a prime number and False otherwise.\n    &gt;&gt;&gt; is_prime(2)\n    True\n    &gt;&gt;&gt; is_prime(16)\n    False\n    &gt;&gt;&gt; is_prime(521)\n    True\n    &quot;&quot;&quot;\n    "*** YOUR CODE HERE ***"\n\n', "python", "is-prime-input"));
+            </script>
+        
+            <div class="sol-highlight">
+                <b>Solution</b>
+                
+<pre><code>def is_prime(n):
+    &quot;&quot;&quot;Returns True if n is a prime number and False otherwise.
+    &gt;&gt;&gt; is_prime(2)
+    True
+    &gt;&gt;&gt; is_prime(16)
+    False
+    &gt;&gt;&gt; is_prime(521)
+    True
+    &quot;&quot;&quot;
+    def check_all(i):
+        &quot;Check whether no number from i up to n evenly divides n.&quot;
+        if i == n:      # could be replaced with i &gt; (n ** 0.5)
+            return True
+        elif n % i == 0:
+            return False
+        return check_all(i + 1)
+    return check_all(2)
+</code></pre>
+
+            </div>
+        
+
+
+        <button id='toggle-4' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-4">
+Define an inner function that checks whether some integer between <code>i</code> and <code>n</code> evenly divides <code>n</code>. Then you can call it starting with <code>i=2</code>:
+
+<pre><code>def is_prime(n):
+    def f(i):
+        if n % i == 0:
+            return ____
+        elif ____:
+            return ____
+        else:
+            return f(____)
+    return f(2)</code></pre>
+
+
+</div>
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#recursion">Recursion</a></li>
+  <ul>
+    <li><a href="#q1-swipe">Q1: Swipe</a></li>
+    <li><a href="#q2-skip-factorial">Q2: Skip Factorial</a></li>
+    <li><a href="#q3-recursive-hailstone">Q3: Recursive Hailstone</a></li>
+  </ul>
+  <li><a href="#extra-questions">Extra Questions</a></li>
+  <ul>
+    <li><a href="#q4-is-prime">Q4: Is Prime</a></li>
+    <li><a href="#q5-function-repeater">Q5: Function Repeater</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <!-- <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/weekly">Weekly Schedule</a></li>
+            <li><a href="/office-hours">Office Hours</a></li>
+            <li><a href="/staff">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="/resources">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/articles/studying">Studying Guide</a></li>
+            <li><a href="/articles/debugging">Debugging Guide</a></li>
+            <li><a href="/articles/composition">Composition Guide</a></li>
+            <li><a href="/articles/pair-programming">Pair Programming</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="/articles/about">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/articles/about#assignments">Assignments</a></li>
+            <li><a href="/articles/about#exams">Exams</a></li>
+            <li><a href="/articles/about#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer> -->
+
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/editor/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min'
+      };
+      importScripts('https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
+    <script src="/su25/assets/js/network_storage.js"></script>
+    <script src="/su25/assets/js/code_tabindex.js"></script>
+    <script src="/su25/assets/js/storable.js"></script>
+    <script src="/su25/assets/js/editor.js"></script>
+    <script src="/su25/assets/js/copy-button.js"></script>
+    <script src="/su25/assets/js/env-diagram.js"></script>
+    
+<!-- <script src="/assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>

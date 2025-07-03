@@ -13,7 +13,7 @@ def increment(x):
     return x + 1
 
 
-HW_SOURCE_FILE=__file__
+SOURCE_FILE = __file__
 
 
 def product(n, term):
