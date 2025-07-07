@@ -1,0 +1,22 @@
+{
+    "name": "Homework 2",
+    "endpoint": "cal/cs88/su25/hw02",
+    "src": [
+        "hw02.py"
+    ],
+    "tests": {
+        "hw*.py": "doctest",
+        "tests/*.py": "ok_test"
+    },
+    "default_tests": [
+        "divisible_by_k",
+        "hailstone"
+    ],
+    "protocols": [
+        "file_contents",
+        "grading",
+        "analytics",
+        "help",
+        "backup"
+    ]
+}
