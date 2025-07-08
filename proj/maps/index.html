@@ -1,0 +1,1347 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="Data C88C: Computational Structures in Data Science" />
+    <meta name="keywords" content ="Computer Science, Programming, Berkeley, EECS" />
+    <meta name="author" content ="Eric Kim" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/su25/assets/js/hl.js"></script>
+    <script src="/su25/assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="/su25/assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+    <link rel="stylesheet" href="/su25/assets/css/style.css">
+    <link rel="stylesheet" href="/su25/assets/css/mono-blue.css">
+    <link rel="icon" href="/su25/assets/images/favicon.ico">
+
+    
+
+<link href="/su25/assets/css/project.css" rel="stylesheet" type="text/css">
+
+
+    <title>
+Maps | Data C88C Summer 2025
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/su25/">
+            Data C88C
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="/assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="/su25/">Schedule</a></li>
+            
+            <li><a href="/su25/articles/about-c88c/">Syllabus</a></li>
+            
+            <li><a href="https://edstem.org/us/courses/79702/discussion/">Ed</a></li>
+            
+            <li><a href="/su25/office-hours/">Google Calendar</a></li>
+            
+            <li><a href="/su25/articles/contact-c88c/">Contact</a></li>
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Links
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://www.gradescope.com/courses/1053326">Gradescope</a></li>
+                
+                <li><a href="https://bcourses.berkeley.edu/courses/1545181/external_tools/90481">Lecture Recordings</a></li>
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://bcourses.berkeley.edu/courses/1545181/">bCourses</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Resources
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="/su25/resources/">Past Exams & Websites</a></li>
+                
+                <li><a href="https://www.composingprograms.com">Textbook</a></li>
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">Debugging Guide</a></li>
+                
+                <li><a href="/su25/articles/studying/">Studying Guide</a></li>
+                
+                <li><a href="/su25/articles/composition/">Composition Guide</a></li>
+                
+                <li><a href="/su25/articles/campus-res/">Campus Resources</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="/su25/instructor">Instructors</a></li>
+                
+                <li><a href="/su25/staff">TAs & Tutors</a></li>
+                
+              </ul>
+            </li>
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Maps
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="maps.zip" class="label label-outline">maps.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+<div class="haiku">
+  <p><img class="img-responsive center-block" src="visualize/voronoi.png" alt="voronoi" width="" height=""></p>
+
+<blockquote><cite>
+  Let's go out to eat!</br>
+  Show me places I would like</br>
+  By learning my tastes.</br>
+</cite></blockquote>
+</div>
+
+    
+
+<h2 id="introduction">Introduction</h2>
+
+
+<p>In this project, you will create a visualization of restaurant scores using
+machine learning and the <a href="https://www.yelp.com/dataset">Yelp academic dataset</a>. In this visualization,
+Berkeley is segmented into regions, where each region is shaded by the predicted
+score of the closest restaurant (yellow is 5 stars, blue is 1
+star). Specifically, the visualization you will be constructing is a
+<a href="https://en.wikipedia.org/wiki/Voronoi_diagram">Voronoi diagram</a>.</p>
+
+<p>In the map above, each dot represents a restaurant. The color of the dot is
+determined by the restaurant's location. For example, downtown restaurants are
+colored green. The user that generated this map has a strong preference for
+Southside restaurants, and so the southern regions are colored yellow.</p>
+
+<p>This project uses concepts from Sections <a href="https://www.composingprograms.com/pages/21-introduction.html">2.1</a>, <a href="https://www.composingprograms.com/pages/22-data-abstraction.html">2.2</a>, <a href="https://www.composingprograms.com/pages/23-sequences.html">2.3</a>, and
+<a href="https://www.composingprograms.com/pages/24-mutable-data.html#dictionaries">2.4.3</a> of <a href="https://www.composingprograms.com/">Composing Programs</a>. It also introduces techniques and
+concepts from <em>machine learning</em>, a growing field at the intersection of
+computer science and statistics that analyzes data to find patterns and make
+predictions.</p>
+
+
+<h2 id="logistics">Logistics</h2>
+
+
+
+<p>This is a  project. You may work with one other partner.
+You should not share your code with students who are not your partner or copy
+from anyone else's solutions. In the end, you will submit one project for both
+partners. <strong>We strongly encourage you to use <a href="/su25/articles/pair-programming">pair programming</a>
+to work on all parts of the project together rather than splitting up the work.</strong>
+Whoever is not coding should contribute by looking at the
+code and providing comments on a direction to go and catching bugs.</p>
+
+
+
+<!-- <p>Remember that you can earn an additional bonus point by submitting the
+  project at least 24 hours before the deadline.</p> -->
+
+
+
+<p><strong>The project is worth 20 points:</strong></p>
+
+<ul>
+  <li>The mid-project checkpoint is worth 2 points and is due <strong>Sunday 07/13</strong></li>
+  <li>The final project submission is worth 18 points and is due <strong>Thursday 07/24</strong></li>
+</ul>
+
+<p>You can earn 1 point of extra credit for submitting by <strong>Wednesday 07/23</strong>.</p>
+
+
+<p>You will turn in the following files:</p>
+
+<ul>
+  <li><code>utils.py</code></li>
+  <li><code>abstractions.py</code></li>
+  <li><code>recommend.py</code></li>
+</ul>
+
+<p>You do not need to modify or turn in any other files to complete the
+project. To submit the project, <b> submit the required files to the appropriate Gradescope assignment.</b></p>
+
+<p>You may not use artificial intelligence tools to help you with this project
+or reference solutions found on the internet.</p>
+
+<p>For the functions that we ask you to complete, there may be some
+initial code that we provide. If you would rather not use that code,
+feel free to delete it and start from scratch. You may also add new
+function definitions as you see fit.</p>
+
+<p><b>However, please do not modify any other functions or edit any files not
+listed above</b>. Doing so may result in your code failing our autograder tests.
+Also, please do not change any function signatures (names, argument order, or
+number of arguments).</p>
+
+
+
+<p>Throughout this project, you should be testing the correctness of your code.
+It is good practice to test often, so that it is easy to isolate any problems.
+However, you should not be testing <i>too</i> often, to allow yourself time to
+think through problems.</p>
+
+<p>We have provided an <b>autograder</b> called <code>ok</code> to help you
+with testing your code and tracking your progress. The first time you run the
+autograder, you will be asked to <b>log in with your Ok account using your web
+browser</b>. Please do so. Each time you run <code>ok</code>, it will back up
+your work and progress on our servers.</p>
+
+<p>The primary purpose of <code>ok</code> is to test your implementations.</p>
+
+<!-- <p>First, some of the test cases are <i>locked</i>. To unlock tests, run the
+following command from your terminal:</p>
+
+<pre><code>python3 ok -u</code></pre>
+
+<p>This command will start an interactive prompt that looks like:</p>
+
+<pre>
+=====================================================================
+Assignment: Maps
+Ok, version ...
+=====================================================================
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Unlocking tests
+
+At each "? ", type what you would expect the output to be.
+Type exit() to quit
+
+---------------------------------------------------------------------
+Question 0 &gt; Suite 1 &gt; Case 1
+(cases remaining: 1)
+
+&gt;&gt;&gt; Code here
+?
+</pre>
+
+<p>At the <code>?</code>, you can type what you expect the output to be. If you
+are correct, then this test case will be available the next time you run the
+autograder.</p>
+
+<p>The idea is to understand <i>conceptually</i> what your program should do
+first, before you start writing any code.</p>
+
+<p>Once you have unlocked some tests and written some code, you can check the
+correctness of your program using the tests that you have unlocked:</p>
+
+<pre>python3 ok</pre>
+
+<p>Most of the time, you will want to focus on a particular question. Use the
+<code>-q</code> option as directed in the problems below.</p>  -->
+
+<!-- <p>Second, there may be some test cases that are <i>hidden</i>. These test cases are
+<b>not</b> run by the command:</p> -->
+
+<!--<pre>python3 ok</pre>-->
+
+<!-- <p>They are only run when you submit:</p> -->
+
+<!-- <pre>python3 ok --submit</pre> -->
+
+<!-- <p> We keep test cases hidden to ensure that you write your code with the intention
+of solving the question at hand, not purely to pass the given tests. The hidden
+tests will be run when you submit your project. You will receive an email with part of
+the autograder results after submitting. However, the autograder has a 15 minute
+cooldown period. If you submit before 15 minutes have passed, the autograder will
+not run.</p> -->
+
+<!-- <p>We recommend that you submit <b>after you finish each
+problem</b>. Only your last submission will be graded. It is also useful for us
+to have more backups of your code in case you run into a submission issue. <b>If you forget to submit, your last backup will be automatically converted to a submission. </b></p>
+-->
+
+<!--<p>After you run this command, you will receive an email (to the address-->
+<!--that you used to sign up for Ok) that has the output from all <i>failed</i>-->
+<!--unlocked tests, including hidden tests, along with your score at the bottom. You-->
+<!--can continue submitting until you pass all the tests. However, you will receive-->
+<!--<b>at most one email every half hour</b>.</p>-->
+
+<!--<p>This buffer period is meant for you and your partner to try and understand-->
+<!--where your error comes from, and take some time to think through your code. We-->
+<!--encourage you to do this for all projects.</p>-->
+
+<!---
+<p>If you are trying to debug a test failure, you can launch an interactive session
+after the test is run with:</p>
+
+<pre><code>python3 ok &#x2d;q 05 &#x2d;i</code></pre>
+
+<p>This will run the tests and launch an interactive session if a test does not
+pass.</p>
+
+<pre><code>=====================================================================
+Assignment: Project 1: Hog
+Ok, version ....
+=====================================================================
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Running tests
+
+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;
+Question ... &gt; Suite ... &gt; Case ...
+
+&gt;&gt;&gt; the_test()
+"expected value"
+
+# Error: expected
+#     "expected value"
+# but got
+#     None
+
+# Interactive console. Type exit() to quit
+&gt;&gt;&gt;</code></pre>
+-->
+
+
+<!--- <p>The <code>tests</code> folder is used to store autograder tests, so
+<b>do not modify it</b>. You may lose all your unlocking progress if you
+do. If you need to get a fresh copy, you can download the
+<a href=".zip">zip archive</a> and copy it over, but you
+will need to start unlocking from scratch.</p> -->
+
+<!---
+<p>If you do not want us to record a backup of your work or information about
+your progress, you can run
+
+<pre>python3 ok --local</pre>
+
+
+With this option, no information will be sent to our course
+servers.
+
+-->
+
+<p>If you want to test your code interactively, you can run
+
+<pre> python3 ok -q [question number] -i </pre>
+
+with the appropriate question number (e.g. <code>01</code>) inserted.
+This will run the tests for that question until the first one you failed,
+then give you a chance to test the functions you wrote interactively.</p>
+
+<p>You can also use the debugging print feature in OK by writing
+
+<pre> print("DEBUG:", x) </pre>
+
+which will produce an output in your terminal without causing OK tests to fail
+with extra output.
+
+<h2 id="project-files">Project Files</h2>
+
+
+<p>The <a href="maps.zip">maps.zip</a> archive contains all the starter code and data sets.
+The project uses several files, but all of your changes will be made to
+<code>utils.py</code>, <code>abstractions.py</code>, and <code>recommend.py</code>.</p>
+
+<ul>
+  <li><code>abstractions.py</code>: Data abstractions used in the project</li>
+  <li><code>recommend.py</code>: Machine learning algorithms and data processing</li>
+  <li><code>utils.py</code>: Utility functions for data processing</li>
+  <li><code>ucb.py</code>: Utility functions for miscellaneous and debugging</li>
+  <li><code>data</code>: A directory of Yelp users, restaurants, and reviews</li>
+  <li><code>ok</code>: The autograder</li>
+  <li><code>maps.ok</code>: The <code>ok</code> configuration file</li>
+  <li><code>tests</code>:  A directory of tests used by <code>ok</code></li>
+  <li><code>users</code>: A directory of user files</li>
+  <li><code>visualize</code>: A directory of tools for drawing the final visualization</li>
+</ul>
+
+
+<h2 id="conceptual-review">Conceptual Review</h2>
+
+
+<p>The following concepts will be important to understand to do this project. Feel free to review them below,
+or skip if you feel comfortable.</p>
+
+<br>
+
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Lambdas<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-1">
+Lambdas are anonymous function definitions. They allow us to define a function
+and use it without explicitly giving it a name. They are useful because they
+allow us to define functions for one-time use without clogging up our namespace.
+<em>(Coming up with new names is hard, you know?)</em> A lambda takes in a number of arguments.
+It evaluates a single expression using those arguments, and returns the value that the
+expression evaluates to. Lambdas have the following syntax:
+
+<pre><code>lambda &lt;arguments&gt;: &lt;expression using arguments&gt;</code></pre>
+
+<p>Below are a couple of examples of lambda expressions:</p>
+
+<pre><code>&gt;&gt;&gt; square = lambda x: x * x
+&gt;&gt;&gt; square(4)
+16
+&gt;&gt;&gt; plus = lambda x,y: x + y
+&gt;&gt;&gt; plus(2, 3)
+5
+&gt;&gt;&gt; (lambda x: x[0])([1, 2, 3])
+1</code></pre>
+
+<p><em>Note that as with other functions, a lambda function's lexical parent is the frame
+in which it was defined.</em>
+</div></p>
+
+<br>
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Dictionaries<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-2">
+A dictionary contains key-value pairs and allows the values to be looked up by
+their key using square brackets. Each key must be unique.
+
+<pre><code>&gt;&gt;&gt; d = {2: 4, &#x27;two&#x27;: [&#x27;four&#x27;], (1, 1): 4}
+&gt;&gt;&gt; d[2]
+4
+&gt;&gt;&gt; d[&#x27;two&#x27;]
+[&#x27;four&#x27;]
+&gt;&gt;&gt; d[(1, 1)]
+4</code></pre>
+
+<p>The sequence of keys or values or key-value pairs can be accessed using
+<code>.keys()</code> or <code>.values()</code> or <code>.items()</code>.</p>
+
+<pre><code>&gt;&gt;&gt; for k in d.keys():
+...     print(k)
+...
+2
+two
+(1, 1)
+&gt;&gt;&gt; for v in d.values():
+...     print(v)
+...
+4
+[&#x27;four&#x27;]
+4
+&gt;&gt;&gt; for k, v in d.items():
+...     print(k, v)
+...
+2 4
+two [&#x27;four&#x27;]
+(1, 1) 4</code></pre>
+
+<p>By default, iterating through a dictionary iterates through its keys.</p>
+
+<pre><code>&gt;&gt;&gt; for x in d:
+...     print(x)
+...
+2
+two
+(1, 1)</code></pre>
+
+<p>You can check whether a dictionary contains a key using <code>in</code>:</p>
+
+<pre><code>&gt;&gt;&gt; &#x27;two&#x27; in d
+True
+&gt;&gt;&gt; 4 in d
+False</code></pre>
+
+<p>Attempting to access a key that does not exist in a dictionary will cause an error.
+You can use <code>.get(&lt;key&gt;, &lt;default&gt;)</code>, which returns the value corresponding to <code>&lt;key&gt;</code> in
+a dictionary or, if it doesn't exist, returns <code>&lt;default&gt;</code>.</p>
+
+<pre><code>&gt;&gt;&gt; d[3]
+KeyError: 3
+&gt;&gt;&gt; d.get(3, &quot;fun&quot;)
+&quot;fun&quot;
+&gt;&gt;&gt; d.get(2, &quot;fun&quot;)
+4</code></pre>
+
+<p>The contents of a dictionary can be modified using <code>=</code>:</p>
+
+<pre><code>&gt;&gt;&gt; d
+{2: 4, &#x27;two&#x27;: [&#x27;four&#x27;], (1, 1): 4}
+&gt;&gt;&gt; d[(1, 1)] = &quot;61a&quot;
+&gt;&gt;&gt; d[(1, 1)]
+&#x27;61a&#x27;</code></pre>
+
+<p>A dictionary comprehension is an expression that evaluates to a new dictionary.</p>
+
+<pre><code>&gt;&gt;&gt; {3*x: 3*x + 1 for x in range(2, 5)}
+{6: 7, 9: 10, 12: 13}</code></pre>
+
+</div>
+
+
+<h2 id="phase-0-utilities">Phase 0: Utilities</h2>
+
+
+<blockquote><p>All changes in this phase will be made to <code>utils.py</code>.</p></blockquote>
+
+
+<h3 id="problem-0-1-pt">Problem 0 (1 pt)</h3>
+
+
+<p>Before starting the core project, familiarize yourself with some Python features
+by completing <code>utils.py</code>. Each function described below can be implemented in
+one line. The functions you implement here can optionally be used in future phases of the project but are not strictly needed.</p>
+
+
+<h4 id="problem-0-1-map_and_filter">Problem 0.1: <code>map_and_filter</code></h4>
+
+
+<p>Recall that a list comprehension constructs a new list from an existing sequence by
+first filtering the given sequence, and then computing an element of the result
+for each remaining element that is not filtered out. A list comprehension has
+the following syntax:</p>
+
+<pre><code>[&lt;map expression&gt; for &lt;name&gt; in &lt;sequence expression&gt; if &lt;filter expression&gt;]</code></pre>
+
+<p>For example, if we wanted to square every even integer in <code>range(10)</code>, we could
+write:</p>
+
+<pre><code>&gt;&gt;&gt; [x * x for x in range(10) if x % 2 == 0]
+[0, 4, 16, 36, 64]</code></pre>
+
+<p>In <code>utils.py</code>, implement <code>map_and_filter</code>. This function takes in a sequence
+<code>s</code>, a one-argument function <code>map_fn</code>, and a one-argument function <code>filter_fn</code>.
+It returns a new list containing the result of calling <code>map_fn</code> on each element
+of <code>s</code> for which <code>filter_fn</code> returns a true value. <em>Make sure your solution is
+only one line and uses a list comprehension.</em></p>
+
+
+<h4 id="problem-0-2-key_of_min_value">Problem 0.2: <code>key_of_min_value</code></h4>
+
+
+<p>The built-in <code>min</code> function takes a sequence (such as a list or a dictionary)
+and returns the sequence's smallest element. The <code>min</code> function can also take a
+keyword argument called <code>key</code>, which must be a one-argument function. The <code>key</code>
+function is called with each element of the list, and the return values are used
+for comparison. For example:</p>
+
+<pre><code>&gt;&gt;&gt; words = [&#x27;bat&#x27;, &#x27;attack&#x27;, &#x27;do&#x27;, &#x27;cat&#x27;]
+&gt;&gt;&gt; # no key argument; returns &quot;smallest&quot; input which is first word in alphabetical order
+&gt;&gt;&gt; min(words)
+&#x27;attack&#x27;
+&gt;&gt;&gt; # provided key argument; returns input with shortest length
+&gt;&gt;&gt; min(words, key=lambda w: len(w))
+&#x27;do&#x27;</code></pre>
+
+<p>In <code>utils.py</code>, implement <code>key_of_min_value</code>, which takes in a dictionary <code>d</code> and
+returns the key that corresponds to the minimum value in <code>d</code>. This behavior
+differs from just calling <code>min</code> on a dictionary, which would return the smallest
+key. <em>Make sure your solution is only one line and uses the <code>min</code> function.</em></p>
+
+
+<h4 id="problem-0-3-enumerate">Problem 0.3: <code>enumerate</code></h4>
+
+
+<p>The <code>zip</code> function defined in <code>utils.py</code> takes multiple sequences as arguments
+and returns a list of lists, where the i-th list contains the i-th element
+of each original list. For example:</p>
+
+<pre><code>&gt;&gt;&gt; zip([1, 2, 3], [4, 5, 6])
+[[1, 4], [2, 5], [3, 6]]
+&gt;&gt;&gt; for triple in zip([&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;], [1, 2, 3], [&#x27;do&#x27;, &#x27;re&#x27;, &#x27;mi&#x27;]):
+...     print(triple)
+[&#x27;a&#x27;, 1, &#x27;do&#x27;]
+[&#x27;b&#x27;, 2, &#x27;re&#x27;]
+[&#x27;c&#x27;, 3, &#x27;mi&#x27;]</code></pre>
+
+<p>In <code>utils.py</code>, use the <code>zip</code> function to implement <code>enumerate</code>, which takes a
+sequence <code>s</code> and a starting index <code>start</code>. It returns a list of pairs, in which
+the i-th element is <code>i+start</code> paired with the i-th element of <code>s</code>. <em>Make sure
+your solution is only one line and uses the <code>zip</code> function and a <code>range</code></em>.</p>
+
+<p><em>Note</em>: <code>zip</code> and <code>enumerate</code> are also built-in Python functions, but their
+behavior is slightly different than the versions provided in <code>utils.py</code>.</p>
+
+<p><strong>Common Mistakes</strong></p>
+
+<blockquote><p><code>RecursionError: maximum recursion depth exceeded</code> - make sure your given zip function code is <code>return list(map(list, _zip(*sequences)))</code> and not <code>return list(map(list, zip(*sequences)))</code> (note the underscore)</p></blockquote>
+
+
+<h4 id="run-ok-for-problem-0">Run Ok for Problem 0</h4>
+
+
+<p>As you work through Problem 0, you can unlock the test cases for these
+exercises and check your solutions by running <code>ok</code>:</p>
+
+<pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 00 -u
+python3 ok -q 00<button id="copy-code-python3ok-q00-upython3ok-q00" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q00-upython3ok-q00").onclick = () => copyCode('python3 ok -q 00 -u\npython3 ok -q 00', "copy-code-python3ok-q00-upython3ok-q00");
+        </script>
+        <br/>
+
+
+<h2 id="phase-1-data-abstraction">Phase 1: Data Abstraction</h2>
+
+
+<blockquote><p>All changes in this phase will be made to <code>abstraction.py</code>.</p></blockquote>
+
+<p>Complete the data abstractions in <code>abstractions.py</code>. Two of the data
+abstractions have already been completed for you: the <code>review</code> data abstraction
+and the <code>user</code> data abstraction. Make sure that you understand how they work.</p>
+
+
+<h3 id="data-abstraction-descriptions">Data Abstraction Descriptions</h3>
+
+
+
+<h4 id="review-data-abstraction">Review Data Abstraction</h4>
+
+
+<table style="width:100%;" >
+    <tr>
+        <th style="width:25%;border:1px solid; padding:8px;">variable</th>
+        <th style="width:35%;border:1px solid; padding:8px;">type</th>
+        <th style="width:40%;border:1px solid; padding:8px;">description</th>
+    </tr>
+    <tr>
+        <td style="border:1px solid; padding:8px;"><code>restaurant_name</code></td>
+        <td style="border:1px solid; padding:8px;">string</td>
+        <td style="border:1px solid; padding:8px;">restaurant name of the review</td>
+    </tr>
+    <tr>
+        <td style="border:1px solid; padding:8px;"><code>review_score</code></td>
+        <td style="border:1px solid; padding:8px;">float between 1 and 5 (inclusive)</td>
+        <td style="border:1px solid; padding:8px;">number of stars given by the review</td>
+    </tr>
+</table>
+
+<br>
+
+
+<h4 id="user-data-abstraction">User Data Abstraction</h4>
+
+
+<table style="width:100%;">
+    <tr>
+        <th style="width:25%;border:1px solid; padding:8px;">variable</th>
+        <th style="width:35%;border:1px solid; padding:8px;">type</th>
+        <th style="width:40%;border:1px solid; padding:8px;">description</th>
+    </tr>
+    <tr>
+        <td style="border:1px solid; padding:8px;"><code>name</code></td>
+        <td style="border:1px solid; padding:8px;">string</td>
+        <td style="border:1px solid; padding:8px;">name of user</td>
+    </tr>
+    <tr>
+        <td style="border:1px solid; padding:8px;"><code>reviews</code></td>
+        <td style="border:1px solid; padding:8px;">dictionary from restaurant names to <code>review</code> data abstractions</td>
+        <td style="border:1px solid; padding:8px;">reviews that user has written</td>
+    </tr>
+</table>
+
+<br>
+
+
+<h4 id="restaurant-data-abstraction">Restaurant Data Abstraction</h4>
+
+
+<table style="width:100%;">
+    <tr>
+        <th style="width:25%;border:1px solid; padding:8px;">variable</th>
+        <th style="width:35%;border:1px solid; padding:8px;">type</th>
+        <th style="width:40%;border:1px solid; padding:8px;">description</th>
+    </tr>
+    <tr>
+        <td style="border:1px solid; padding:8px;"><code>name</code></td>
+        <td style="border:1px solid; padding:8px;">string</td>
+        <td style="border:1px solid; padding:8px;">name of restaurant</td>
+    </tr>
+    <tr>
+        <td style="border:1px solid; padding:8px;"><code>location</code></td>
+        <td style="border:1px solid; padding:8px;">list containing two floats: latitude and longitude</td>
+        <td style="border:1px solid; padding:8px;">location of restaurant</td>
+    </tr>
+    <tr>
+        <td style="border:1px solid; padding:8px;"><code>categories</code></td>
+        <td style="border:1px solid; padding:8px;">list of strings</td>
+        <td style="border:1px solid; padding:8px;">categories that restaurant belongs to</td>
+    </tr>
+    <tr>
+        <td style="border:1px solid; padding:8px;"><code>price</code></td>
+        <td style="border:1px solid; padding:8px;">integer</td>
+        <td style="border:1px solid; padding:8px;">price of restaurant</td>
+    </tr>
+    <tr>
+        <td style="border:1px solid; padding:8px;"><code>scores</code></td>
+        <td style="border:1px solid; padding:8px;">list of scores (floats between 1 to 5, inclusive)</td>
+        <td style="border:1px solid; padding:8px;">list of scores based on restaurant reviews</td>
+    </tr>
+</table>
+
+
+<h3 id="problem-1-0-5-pt">Problem 1 (0.5 pt)</h3>
+
+
+<p>Complete the implementations of the constructor and selectors for the
+<code>restaurant</code> data abstraction. You can use any implementation you choose, but
+the constructor and selectors must be defined together to satisfy the following
+description. A starter implementation using a dictionary is provided, but you
+may modify it.</p>
+
+<ul>
+  <li><p><code>make_restaurant</code>: return a restaurant constructed from five arguments:</p>
+
+  <ul>
+    <li><code>name</code> (a string)</li>
+    <li><code>location</code> (a list containing latitude and longitude)</li>
+    <li><code>categories</code> (a list of strings)</li>
+    <li><code>price</code> (a number)</li>
+    <li><code>reviews</code> (a list of review data abstractions created by <code>make_review</code>)</li>
+  </ul></li>
+  <li><code>restaurant_name</code>: return the name of a <code>restaurant</code></li>
+  <li><code>restaurant_location</code>: return the location of a <code>restaurant</code></li>
+  <li><code>restaurant_categories</code>: return the categories of a <code>restaurant</code></li>
+  <li><code>restaurant_price</code>: return the price of a <code>restaurant</code></li>
+  <li><code>restaurant_scores</code>: return a list of scores for the restaurant</li>
+</ul>
+
+<p>Use Ok to unlock and test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 01 -u
+python3 ok -q 01<button id="copy-code-python3ok-q01-upython3ok-q01" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q01-upython3ok-q01").onclick = () => copyCode('python3 ok -q 01 -u\npython3 ok -q 01', "copy-code-python3ok-q01-upython3ok-q01");
+        </script>
+        <br/>
+
+
+<h3 id="problem-2-0-5-pt">Problem 2 (0.5 pt)</h3>
+
+
+<p>Implement the <code>restaurant_num_scores</code> and <code>restaurant_mean_score</code> functions,
+<em>without assuming any particular implementation of a restaurant</em>.</p>
+
+<p>Be sure not to violate abstraction barriers! Violating an abstraction barrier means writing code <strong>outside of the ADT</strong> that <strong>makes assumption(s) about how the ADT is implemented</strong>. On the other hand, calling functions that are part of the ADT does not make assumptions about the underlying implementation.</p>
+
+<p>Note that if these two functions were part of the restaurant ADT, there would be no abstraction barrier to break. For this problem, you must assume the two functions are <strong>not</strong> part of the ADT, so you must take care not to violate the abstraction barrier.</p>
+
+<blockquote><p><em>Hint</em>: Use the <code>mean</code> function from <code>utils.py</code> to compute the average value of
+a sequence of numbers.</p></blockquote>
+
+<p>Test your implementation before moving on:</p>
+
+<pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 02 -u
+python3 ok -q 02<button id="copy-code-python3ok-q02-upython3ok-q02" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q02-upython3ok-q02").onclick = () => copyCode('python3 ok -q 02 -u\npython3 ok -q 02', "copy-code-python3ok-q02-upython3ok-q02");
+        </script>
+        <br/>
+
+
+<h3 id="optional-visualization">Optional: Visualization</h3>
+
+
+<p>When you finish, you should be able to generate a visualization of all
+restaurants rated by a user. Use <code>&#x2d;u</code> to select a user from the <code>users</code>
+directory (a user is represented by a <code>.dat</code> file). You can even create your own.</p>
+
+<pre><code>python3 recommend.py
+python3 recommend.py &#x2d;u one_cluster</code></pre>
+
+<blockquote><p><strong>Notes:</strong></p>
+
+<ul>
+  <li>You may have to <strong>refresh your browser</strong> to update the visualization.</li>
+  <li>You may see an error that says <strong>"This page could not load Google Maps correctly." This is fine,</strong> just click Ok. As long as you can see the voronoi diagram and each restaurant, it's working.</li>
+  <li><strong>If you aren't able to get the visualization to work, that is also completely fine.</strong> You are only graded on the code you write and submit to Gradescope, not whether the visualization shows up on your computer (which could be caused by another issue).</li>
+</ul></blockquote>
+
+
+<h2 id="checkpoint-submission">Checkpoint Submission</h2>
+
+
+<p>When you have finished with Phase 0 and Phase 1, you must submit to the <a href="https://www.gradescope.com/courses/961665/assignments/5689516">Maps Checkpoint</a> on Gradescope.</p>
+
+<blockquote><p>If you're working with a partner, <strong>you must add your partner to your Gradescope submission.</strong> Review Gradescope's <a href="https://guides.gradescope.com/hc/en-us/articles/21863861823373-Adding-Group-Members-to-a-Submission">instructions</a> on adding partners.</p></blockquote>
+
+
+<h2 id="phase-2-unsupervised-learning">Phase 2: Unsupervised Learning</h2>
+
+
+<blockquote><p>All changes in this phase will be made to <code>recommend.py</code>.</p></blockquote>
+
+<p>Restaurants tend to appear in clusters.  In this phase, we will devise a way
+to group together restaurants that are close to each other.</p>
+
+<p>The <strong>k-means algorithm</strong> is a method for discovering the centers of clusters. It
+is called an <em>unsupervised</em> learning method because the algorithm is not told
+what the correct clusters are; it must infer the clusters from the data alone.</p>
+
+<p>The k-means algorithm finds <code>k</code> <em>centroids</em> within a dataset that each
+correspond to a cluster of inputs. To do so, k-means begins by choosing <code>k</code>
+centroids at random, then alternates between the following two steps:</p>
+
+<ol>
+  <li>Group the restaurants into clusters, where each cluster contains all
+  restaurants that are closest to the same centroid.</li>
+  <li>Compute a new centroid (average position) for each new cluster.</li>
+</ol>
+
+<p>This <a href="https://www.youtube.com/watch?v=yR7k19YBqiw">video</a> is a good way to understand and visualize the algorithm,
+as well as one application of k-means which is image segmentation.</p>
+
+
+<h3 id="glossary">Glossary</h3>
+
+
+<p>As you complete the remaining questions, you will encounter the following
+terminology. Be sure to refer back here if you're ever confused about what a
+question is asking.</p>
+
+<ul>
+  <li><strong>location</strong>: A pair containing latitude and longitude</li>
+  <li><strong>centroid</strong>: A location (see above) that represents the center of a cluster</li>
+  <li><strong>restaurant</strong>: A restaurant data abstraction, as defined in <code>abstractions.py</code></li>
+  <li><strong>cluster</strong>: A list of restaurants</li>
+  <li><strong>user</strong>: A user data abstraction, as defined in <code>abstractions.py</code></li>
+  <li><strong>review</strong>: A review data abstraction, as defined in <code>abstractions.py</code></li>
+  <li><strong>feature function</strong>: A single-argument function that takes a restaurant
+  and returns a number representing a <em>feature</em> of the restaurant, such as its mean score or price</li>
+</ul>
+
+
+<h3 id="problem-3-2-pt">Problem 3 (2 pt)</h3>
+
+
+<p>Implement <code>find_closest</code>, which takes a <code>location</code> and a sequence of <code>centroids</code>
+(locations). It returns the element of <code>centroids</code> closest to <code>location</code>.</p>
+
+<p>You should use the <code>distance</code> function from <code>utils.py</code> to measure distance
+between locations. The <code>distance</code> function calculates the <a href="http://mathworld.wolfram.com/Distance.html">Euclidean
+distance</a> between two locations.</p>
+
+<p>If two centroids are equally close, return the one that occurs first in the
+sequence of <code>centroids</code>.</p>
+
+<blockquote><p><em>Hint</em>: Use the <code>min</code> function.</p></blockquote>
+
+<p>Use Ok to unlock and test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 03 -u
+python3 ok -q 03<button id="copy-code-python3ok-q03-upython3ok-q03" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q03-upython3ok-q03").onclick = () => copyCode('python3 ok -q 03 -u\npython3 ok -q 03', "copy-code-python3ok-q03-upython3ok-q03");
+        </script>
+        <br/>
+
+
+<h3 id="problem-4-2-pt">Problem 4 (2 pt)</h3>
+
+
+<p>Implement <code>group_by_centroid</code>, which takes a sequence of <code>restaurants</code> and a
+sequence of <code>centroids</code> (locations) and returns a list of <a href="#glossary">clusters</a>. Each cluster of the result is a list of restaurants that are closer to a specific centroid in <code>centroids</code> than any other centroid. The order of the list of clusters returned does not matter.</p>
+
+<p>If a restaurant is equally close to two centroids, it is associated with the
+centroid that appears first in the sequence of <code>centroids</code>.</p>
+
+<p>The example below is a visualization of the doctest of <code>group_by_centroid</code>.Restaurant <code>r1</code> is in a group by itself because it is closest to centroid <code>c1</code>, while restaurants <code>r2</code> and <code>r3</code> are grouped together because they are closer to centroid <code>c2</code>.</p>
+
+<p><img class="img-responsive center-block" src="https://i.imgur.com/sWQlwd8.png" alt="group_by_centroid visualization" width="" height=""></p>
+
+<blockquote><p><em>Hint</em>: Use the provided <code>group_by_key</code> function to group together all values
+for the same key in a list of <code>[key, value]</code> pairs. You can look at the doctests
+to see how to use it.</p>
+
+<p><em>Hint</em>: What is a function you've already implemented that helps you find
+the closest centroid for a given location? How can you use it here?</p></blockquote>
+
+<p>Be sure not violate abstraction barriers! Test your implementation before
+moving on:</p>
+
+<pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 04 -u
+python3 ok -q 04<button id="copy-code-python3ok-q04-upython3ok-q04" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q04-upython3ok-q04").onclick = () => copyCode('python3 ok -q 04 -u\npython3 ok -q 04', "copy-code-python3ok-q04-upython3ok-q04");
+        </script>
+        <br/>
+
+<p>Common Mistakes</p>
+
+<blockquote><p><a href="https://stackoverflow.com/questions/10116518/im-getting-key-error-in-python">Key Error</a> - the key does not exist in the dictionary</p></blockquote>
+
+
+<h3 id="problem-5-2-pt">Problem 5 (2 pt)</h3>
+
+
+<p>Implement <code>find_centroid</code>, which finds the centroid of a <code>cluster</code> (a list of
+restaurants) based on the locations of the restaurants. The centroid latitude is
+computed by averaging the latitudes of the restaurant locations. The centroid
+longitude is computed by averaging the longitudes.</p>
+
+<p>The example below is a visualization of the doctest of <code>find_centroid</code>. The centroid has been computed based on the locations of restaurants <code>r1</code>, <code>r2</code>, and <code>r3</code>.</p>
+
+<p><img class="img-responsive center-block" src="https://i.imgur.com/XpQdCG8.png" alt="find_centroid visualization" width="" height=""></p>
+
+<blockquote><p><em>Hint</em>: Use the <code>mean</code> function from <code>utils.py</code> to compute the average value of
+a sequence of numbers.</p></blockquote>
+
+<p>Be sure not violate abstraction barriers! Test your implementation before
+moving on:</p>
+
+<pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 05 -u
+python3 ok -q 05<button id="copy-code-python3ok-q05-upython3ok-q05" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q05-upython3ok-q05").onclick = () => copyCode('python3 ok -q 05 -u\npython3 ok -q 05', "copy-code-python3ok-q05-upython3ok-q05");
+        </script>
+        <br/>
+
+
+<h3 id="problem-6-2-pt">Problem 6 (2 pt)</h3>
+
+
+<p>Complete the implementation of <code>k_means</code>. In each iteration of the <code>while</code>
+statement,</p>
+
+<ol>
+  <li>Group <code>restaurants</code> into clusters, where each cluster contains all
+  restaurants closest to the same centroid. (<em>Hint</em>: Use <code>group_by_centroid</code>)</li>
+  <li>Bind <code>centroids</code> to a new list of the centroids of all the clusters.
+  (<em>Hint</em>: Use <code>find_centroid</code>)</li>
+</ol>
+
+<p>Use Ok to unlock and test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 06 -u
+python3 ok -q 06<button id="copy-code-python3ok-q06-upython3ok-q06" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q06-upython3ok-q06").onclick = () => copyCode('python3 ok -q 06 -u\npython3 ok -q 06', "copy-code-python3ok-q06-upython3ok-q06");
+        </script>
+        <br/>
+
+
+<h3 id="optional-visualization-with-k-means-clustering">Optional: Visualization with k-means clustering</h3>
+
+
+<p>Your visualization can now indicate which restaurants are close to each other (e.g.
+Southside restaurants, Northside restaurants).  Dots that have the same color
+on your map belong to the same cluster of restaurants. You can get more
+fine-grained groupings by increasing the number of clusters with the <code>&#x2d;k</code>
+option.</p>
+
+<pre><code>python3 recommend.py &#x2d;k 2
+python3 recommend.py &#x2d;u likes_everything &#x2d;k 3</code></pre>
+
+<p>Congratulations! You've now implemented an unsupervised learning algorithm.</p>
+
+
+<h2 id="phase-3-supervised-learning">Phase 3: Supervised Learning</h2>
+
+
+<blockquote><p>All changes in this phase will be made to <code>recommend.py</code>.</p></blockquote>
+
+<p>In this phase, you will predict what score a user would give for a
+restaurant. You will implement a <em>supervised</em> learning algorithm that attempts
+to generalize from examples for which the correct score is known, which are
+all of the restaurants that the user has already scored. By analyzing a user's
+past scores, we can then try to predict what score the user might give to a
+new restaurant. When you complete this phase, your visualization will include
+all restaurants, not just the restaurants that were scored by a user.</p>
+
+<p>To predict scores, you will implement <strong>simple least-squares linear
+regression</strong>, a widely used statistical method that approximates a relationship
+between some input feature (such as price) and an output value (the score) with
+a line. The algorithm takes a sequence of input-output pairs and computes the
+slope and intercept of the line that minimizes the mean of the squared
+difference between the line and the outputs.</p>
+
+
+<h3 id="problem-7-3-pt">Problem 7 (3 pt)</h3>
+
+
+<p>Implement the <code>find_predictor</code> function, which takes in a <code>user</code>, a sequence of
+<code>restaurants</code>, and a <a href="#glossary">feature function</a> called <code>feature_fn</code>.
+<code>find_predictor</code> returns two values: a <code>predictor</code> function and an <code>r_squared</code>
+value.</p>
+
+<p>Use least-squares linear regression to compute the <code>predictor</code> and <code>r_squared</code>.
+This method, described below, computes the coefficients <code>a</code> and <code>b</code> for the
+<code>predictor</code> line <code>y = a + bx</code>. The <code>r_squared</code> value measures how accurately
+this line describes the original data.</p>
+
+<p>One method of computing these values is by calculating the sums of squares,
+<code>S_xx</code>, <code>S_yy</code>, and <code>S_xy</code>:</p>
+
+<ul>
+  <li><em>S<sub>xx</sub></em> = &Sigma;<em><sub>i</sub></em> (<em>x<sub>i</sub></em> - mean(<em>x</em>))<sup>2</sup></li>
+  <li><em>S<sub>yy</sub></em> = &Sigma;<em><sub>i</sub></em> (<em>y<sub>i</sub></em> - mean(<em>y</em>))<sup>2</sup></li>
+  <li><em>S<sub>xy</sub></em> = &Sigma;<em><sub>i</sub></em> (<em>x<sub>i</sub></em> - mean(<em>x</em>))
+  (<em>y<sub>i</sub></em> - mean(<em>y</em>))</li>
+</ul>
+
+<p>After calculating the sums of squares, the regression coefficients (<code>a</code> and <code>b</code>)
+and <code>r_squared</code> are defined as follows:</p>
+
+<ul>
+  <li><em>b</em> = <em>S<sub>xy</sub></em> / <em>S<sub>xx</sub></em></li>
+  <li><em>a</em> = mean(<em>y</em>) - <em>b</em> * mean(<em>x</em>)</li>
+  <li><em>R</em><sup>2</sup> = <em>S<sub>xy</sub></em><sup>2</sup> / (<em>S<sub>xx</sub> S<sub>yy</sub></em>)</li>
+</ul>
+
+<blockquote><p><em>Hint</em>: The <code>mean</code> function can be helpful here.</p></blockquote>
+
+<p>Use Ok to unlock and test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 07 -u
+python3 ok -q 07<button id="copy-code-python3ok-q07-upython3ok-q07" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q07-upython3ok-q07").onclick = () => copyCode('python3 ok -q 07 -u\npython3 ok -q 07', "copy-code-python3ok-q07-upython3ok-q07");
+        </script>
+        <br/>
+
+
+<h3 id="problem-8-2-pt">Problem 8 (2 pt)</h3>
+
+
+<p>Implement <code>best_predictor</code>, which takes a <code>user</code>, a list of <code>restaurants</code>,
+and a sequence of <code>feature_fns</code>. It uses each feature function to compute a
+predictor function, then returns the predictor that has the highest <code>r_squared</code>
+value.  All predictors are learned from the subset of <code>restaurants</code> reviewed by
+the user (called <code>reviewed</code> in the starter implementation).</p>
+
+<blockquote><p><em>Hint</em>: The <code>max</code> function can also take a <code>key</code> argument, just like <code>min</code>.</p>
+
+<p><em>Hint</em>: What is a function you've already implemented that can compute
+a predictor function? What does the function you implemented return?</p></blockquote>
+
+<p>Use Ok to unlock and test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 08 -u
+python3 ok -q 08<button id="copy-code-python3ok-q08-upython3ok-q08" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q08-upython3ok-q08").onclick = () => copyCode('python3 ok -q 08 -u\npython3 ok -q 08', "copy-code-python3ok-q08-upython3ok-q08");
+        </script>
+        <br/>
+
+
+<h3 id="problem-9-2-pt">Problem 9 (2 pt)</h3>
+
+
+<p>Implement <code>rate_all</code>, which takes a <code>user</code> and list of <code>restaurants</code>. It
+returns a dictionary where the keys are the names of each restaurant in
+<code>restaurants</code>. Its values are scores (numbers).</p>
+
+<p>If a restaurant was already scored by the user, <code>rate_all</code> will assign the
+restaurant the user's score.  Otherwise, <code>rate_all</code> will assign the restaurant
+the score computed by the best predictor for the user. The best predictor is
+chosen using a sequence of <code>feature_fns</code>.</p>
+
+<blockquote><p><em>Hint</em>: You may find the <code>user_score</code> function in <code>abstractions.py</code> useful.</p>
+
+<p><em>Hint</em>: You may find it useful to remember that <code>reviewed</code> is a list of restaurant ADTs. If you're having a hard time passing test cases, look closely at your function's logic.</p></blockquote>
+
+<p>Be sure not violate abstraction barriers! Test your implementation before
+moving on:</p>
+
+<pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 09 -u
+python3 ok -q 09<button id="copy-code-python3ok-q09-upython3ok-q09" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q09-upython3ok-q09").onclick = () => copyCode('python3 ok -q 09 -u\npython3 ok -q 09', "copy-code-python3ok-q09-upython3ok-q09");
+        </script>
+        <br/>
+
+<p>Common mistakes</p>
+
+<blockquote><p><a href="https://stackoverflow.com/questions/13264511/typeerror-unhashable-type-dict">TypeError: unhashable type: 'dict'</a> - Check the type of your dictionary key.</p></blockquote>
+
+
+<h3 id="problem-10-1-pt">Problem 10 (1 pt)</h3>
+
+
+<p>To focus the visualization on a particular restaurant category, implement
+<code>search</code>. The <code>search</code> function takes a category <code>query</code> and a sequence of
+restaurants. It returns all restaurants that have <code>query</code> as a category.</p>
+
+<blockquote><p><em>Hint</em>: you might find a list comprehension useful here.</p></blockquote>
+
+<p>Be sure not violate abstraction barriers! Test your implementation:</p>
+
+<pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 10 -u
+python3 ok -q 10<button id="copy-code-python3ok-q10-upython3ok-q10" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q10-upython3ok-q10").onclick = () => copyCode('python3 ok -q 10 -u\npython3 ok -q 10', "copy-code-python3ok-q10-upython3ok-q10");
+        </script>
+        <br/>
+
+
+<h3 id="optional-visualization-with-category-filtering">Optional: Visualization with category filtering</h3>
+
+
+<p>Congratulations, you've completed the project! The <code>&#x2d;q</code> option allows you to
+filter based on a category. For example, the following command visualizes all
+sandwich restaurants and their predicted scores for the user who
+<code>likes_expensive</code> restaurants:</p>
+
+<pre><code>python3 recommend.py &#x2d;u likes_expensive &#x2d;k 2 &#x2d;p &#x2d;q Sandwiches</code></pre>
+
+
+<h2 id="final-submission">Final Submission</h2>
+
+
+<p>Once you're done with the entire project, you must submit to the <a href="https://www.gradescope.com/courses/961665/assignments/5689515">Maps Project</a> assignment on Gradescope.</p>
+
+<blockquote><p>If you're working with a partner, <strong>you must add your partner to your Gradescope submission.</strong> Review Gradescope's <a href="https://guides.gradescope.com/hc/en-us/articles/21863861823373-Adding-Group-Members-to-a-Submission">instructions</a> on adding partners.</p></blockquote>
+
+
+<h2 id="optional-predicting-your-own-scores">Optional: Predicting your own scores</h2>
+
+
+<p>Once you're done, you can use your project to predict your own scores too!
+Here's how:</p>
+
+<ol>
+  <li>In the <code>users</code> directory, you'll see a couple of <code>.dat</code> files. Copy one of
+  them and rename the new file to <code>yourname.dat</code> (for example, <code>michael.dat</code>).</li>
+  <li><p>In the new file (e.g. <code>michael.dat</code>), you'll see something like the following:</p>
+
+<pre><code>make_user(
+    &#x27;Michael Box&#x27;,     # name
+    [                   # reviews
+        make_review(&#x27;Jasmine Thai&#x27;, 4.0),
+        ...
+    ]
+)</code></pre>
+
+  <p>Replace the second line with your name (as a string).</p></li>
+  <li><p>Replace the existing reviews with reviews of your own! You can get a list of
+  Berkeley restaurants with the following command:</p>
+
+<pre><code>python3 recommend.py &#x2d;r</code></pre>
+
+  <p>Rate a couple of your favorite (or least favorite) restaurants.</p></li>
+  <li><p>Use <code>recommend.py</code> to predict scores for you:</p>
+
+<pre><code>python3 recommend.py &#x2d;u michael &#x2d;k 2 &#x2d;p &#x2d;q Sandwiches</code></pre>
+
+  <p>(Replace <code>michael</code> with your name.) Play around with the number of clusters
+  (the <code>&#x2d;k</code> option) and try different queries (with the <code>&#x2d;q</code> option)!</p></li>
+</ol>
+
+<p>How accurate is your predictor?</p>
+
+<script>
+/*
+This code is duplicated in lab-check-in.html. Doesn't work if we move it to a separate
+file because of JQuery document ready concurrency issues.
+*/
+$(function() {
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+});
+</script>
+
+<script>
+$("#cats_typing").hover(
+  function() {
+    $("#cats_typing").attr("src", "images/cats_typing.gif");
+  },
+  function() {
+    $("#cats_typing").attr("src", "images/cats_typing_still.gif");
+  }
+);
+</script>
+
+
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#introduction">Introduction</a></li>
+  <li><a href="#logistics">Logistics</a></li>
+  <li><a href="#project-files">Project Files</a></li>
+  <li><a href="#conceptual-review">Conceptual Review</a></li>
+  <li><a href="#phase-0-utilities">Phase 0: Utilities</a></li>
+  <ul>
+    <li><a href="#problem-0-1-pt">Problem 0 (1 pt)</a></li>
+    <ul>
+      <li><a href="#problem-0-1-map_and_filter">Problem 0.1: <code>map_and_filter</code></a></li>
+      <li><a href="#problem-0-2-key_of_min_value">Problem 0.2: <code>key_of_min_value</code></a></li>
+      <li><a href="#problem-0-3-enumerate">Problem 0.3: <code>enumerate</code></a></li>
+      <li><a href="#run-ok-for-problem-0">Run Ok for Problem 0</a></li>
+    </ul>
+  </ul>
+  <li><a href="#phase-1-data-abstraction">Phase 1: Data Abstraction</a></li>
+  <ul>
+    <li><a href="#data-abstraction-descriptions">Data Abstraction Descriptions</a></li>
+    <ul>
+      <li><a href="#review-data-abstraction">Review Data Abstraction</a></li>
+      <li><a href="#user-data-abstraction">User Data Abstraction</a></li>
+      <li><a href="#restaurant-data-abstraction">Restaurant Data Abstraction</a></li>
+    </ul>
+    <li><a href="#problem-1-0-5-pt">Problem 1 (0.5 pt)</a></li>
+    <li><a href="#problem-2-0-5-pt">Problem 2 (0.5 pt)</a></li>
+    <li><a href="#optional-visualization">Optional: Visualization</a></li>
+  </ul>
+  <li><a href="#checkpoint-submission">Checkpoint Submission</a></li>
+  <li><a href="#phase-2-unsupervised-learning">Phase 2: Unsupervised Learning</a></li>
+  <ul>
+    <li><a href="#glossary">Glossary</a></li>
+    <li><a href="#problem-3-2-pt">Problem 3 (2 pt)</a></li>
+    <li><a href="#problem-4-2-pt">Problem 4 (2 pt)</a></li>
+    <li><a href="#problem-5-2-pt">Problem 5 (2 pt)</a></li>
+    <li><a href="#problem-6-2-pt">Problem 6 (2 pt)</a></li>
+    <li><a href="#optional-visualization-with-k-means-clustering">Optional: Visualization with k-means clustering</a></li>
+  </ul>
+  <li><a href="#phase-3-supervised-learning">Phase 3: Supervised Learning</a></li>
+  <ul>
+    <li><a href="#problem-7-3-pt">Problem 7 (3 pt)</a></li>
+    <li><a href="#problem-8-2-pt">Problem 8 (2 pt)</a></li>
+    <li><a href="#problem-9-2-pt">Problem 9 (2 pt)</a></li>
+    <li><a href="#problem-10-1-pt">Problem 10 (1 pt)</a></li>
+    <li><a href="#optional-visualization-with-category-filtering">Optional: Visualization with category filtering</a></li>
+  </ul>
+  <li><a href="#final-submission">Final Submission</a></li>
+  <li><a href="#optional-predicting-your-own-scores">Optional: Predicting your own scores</a></li>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <!-- <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/weekly">Weekly Schedule</a></li>
+            <li><a href="/office-hours">Office Hours</a></li>
+            <li><a href="/staff">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="/resources">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/articles/studying">Studying Guide</a></li>
+            <li><a href="/articles/debugging">Debugging Guide</a></li>
+            <li><a href="/articles/composition">Composition Guide</a></li>
+            <li><a href="/articles/pair-programming">Pair Programming</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="/articles/about">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/articles/about#assignments">Assignments</a></li>
+            <li><a href="/articles/about#exams">Exams</a></li>
+            <li><a href="/articles/about#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer> -->
+
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/editor/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min'
+      };
+      importScripts('https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
+    <script src="/su25/assets/js/network_storage.js"></script>
+    <script src="/su25/assets/js/code_tabindex.js"></script>
+    <script src="/su25/assets/js/storable.js"></script>
+    <script src="/su25/assets/js/editor.js"></script>
+    <script src="/su25/assets/js/copy-button.js"></script>
+    <script src="/su25/assets/js/env-diagram.js"></script>
+    
+<!-- <script src="/assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>
