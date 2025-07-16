@@ -600,8 +600,13 @@ learning tools.</p>
 <h3 id="exam-recovery">Exam Recovery</h3>
 
 
-<p>Performing better on the Final than the Midterm has the potential to improve your
-Midterm score. Details for this policy will be announced during the summer.</p>
+<p>It is possible to recover lost points on the midterm by showing improvement on the final. Your score for each midterm (as a percentage of the total points) will be at least 90% of your score on the final exam. For example, a student who scored 24/64 on the midterm, but scored 46/92 (50%) on the final exam would receive an adjusted midterm score of 50% * 90% = 28.8/64 points, and so would recover 4.8 midterm points in addition to the 24 midterm points already scored. i.e.,</p>
+
+<pre><code>new_midterm_percentage = max(midterm_percentage, 0.9 * final_percentage)</code></pre>
+
+
+
+<p>Exam recovery only applies to students who take the final exam during finals week. Students who receive an incomplete are not eligible for exam recovery.</p>
 
 
 <h3 id="late-policy">Late Policy</h3>

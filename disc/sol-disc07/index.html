@@ -197,18 +197,17 @@ your implementation of <code>type</code>; just call <code>press</code> instead.<
 
 <ul>
   <li>Why it's possible to press a button repeatedly with <code>.press().press().press()</code>.</li>
-  <li>Why pressing a button repeatedly sometimes prints on only one line and sometimes
-  prints multiple lines.</li>
+  <li>Why pressing a button repeatedly sometimes prints on only one line and sometimes prints multiple lines.</li>
   <li>Why <code>bored.typed</code> has 10 elements at the end.</li>
 </ul>
 
-<p><strong>Discussion Time</strong>: Before anyone types anything, have a conversation
+<!-- **Discussion Time**: Before anyone types anything, have a conversation
 describing the type of each attribute and how it will be used. Start with
 <code>Button</code>: how will <code>letter</code> and <code>output</code> be used? Then discuss <code>Keyboard</code>: how
 will <code>typed</code> and <code>keys</code> be used? How will new letters be added to the list
 called <code>typed</code> each time a <code>Button</code> in <code>keys</code> is pressed? Call the staff if
 you're not sure! Once everyone understands the answers to these questions, you
-can try writing the code together.</p>
+can try writing the code together. -->
 
 
             
@@ -281,24 +280,24 @@ class Button:
             </div>
         
 
-
+<!-- 
         <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
         Button Hint: Uppercasing<noscript> (enable JavaScript)</noscript>
         </button>
         <div class="solution toggle-1">
 Since <code>self.letter</code> is always lowercase, use <code>self.letter.upper()</code> to produce the uppercase version.
-</div>
+</div> -->
 
-
+<!-- 
         <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
         Button Hint: Caps Lock<noscript> (enable JavaScript)</noscript>
         </button>
         <div class="solution toggle-2">
 The number of times <code>caps_lock</code> has been pressed is either
 <code>self.caps_lock.pressed</code> or <code>Button.caps_lock.pressed</code>.
-</div>
+</div> -->
 
-
+<!-- 
         <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
         Button Hint: Output<noscript> (enable JavaScript)</noscript>
         </button>
@@ -306,7 +305,7 @@ The number of times <code>caps_lock</code> has been pressed is either
 The <code>output</code> attribute is a function that can be called:
 <code>self.output(self.letter)</code> or <code>self.output(self.letter.upper())</code>. You do not
 need to return the result.
-</div>
+</div> -->
 
 
             
@@ -366,7 +365,7 @@ need to return the result.
             </div>
         
 
-
+<!-- 
         <button id='toggle-4' class='btn btn-outline btn-lg alwaystoggle toggle'>
         Keyboard Hint: Keys<noscript> (enable JavaScript)</noscript>
         </button>
@@ -374,9 +373,9 @@ need to return the result.
 The keys can be created using a dictionary comprehension: <code>self.keys = {c: Button(c, ...) for c in LETTERS}</code>.
 The call to <code>Button</code> should take <code>c</code> and <strong>an output function that appends to <code>self.typed</code></strong>, so that every time
 one of these buttons is pressed, it appends a letter to <code>self.typed</code>.
-</div>
+</div> -->
 
-
+<!-- 
         <button id='toggle-5' class='btn btn-outline btn-lg alwaystoggle toggle'>
         Keyboard Hint: Type<noscript> (enable JavaScript)</noscript>
         </button>
@@ -384,7 +383,7 @@ one of these buttons is pressed, it appends a letter to <code>self.typed</code>.
 Call the <code>press</code> method of <code>self.key[w]</code> for each <code>w</code> in <code>word</code>. It should be
 the case that when you call <code>press</code>, the <code>Button</code> is already set up (in the
 <code>Keyboard.__init__</code> method) to output to the <code>typed</code> list of this <code>Keyboard</code>.
-</div>
+</div> -->
 
 <p><strong>Description Time</strong>: Describe how new letters are added to
 <code>typed</code> each time a <code>Button</code> in <code>keys</code> is pressed. Instead of just reading

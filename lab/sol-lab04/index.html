@@ -1,0 +1,489 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="Data C88C: Computational Structures in Data Science" />
+    <meta name="keywords" content ="Computer Science, Programming, Berkeley, EECS" />
+    <meta name="author" content ="Eric Kim" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/su25/assets/js/hl.js"></script>
+    <script src="/su25/assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="/su25/assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+    <link rel="stylesheet" href="/su25/assets/css/style.css">
+    <link rel="stylesheet" href="/su25/assets/css/mono-blue.css">
+    <link rel="icon" href="/su25/assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="/assets/css/lab.css">
+
+
+    <title>
+Lab 4 Solutions | Data C88C Summer 2025
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/su25/">
+            Data C88C
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="/assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="/su25/">Schedule</a></li>
+            
+            <li><a href="/su25/articles/about-c88c/">Syllabus</a></li>
+            
+            <li><a href="https://edstem.org/us/courses/79702/discussion/">Ed</a></li>
+            
+            <li><a href="/su25/office-hours/">Google Calendar</a></li>
+            
+            <li><a href="/su25/articles/contact-c88c/">Contact</a></li>
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Links
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://www.gradescope.com/courses/1053326">Gradescope</a></li>
+                
+                <li><a href="https://bcourses.berkeley.edu/courses/1545181/external_tools/90481">Lecture Recordings</a></li>
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://bcourses.berkeley.edu/courses/1545181/">bCourses</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Resources
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="/su25/resources/">Past Exams & Websites</a></li>
+                
+                <li><a href="https://www.composingprograms.com">Textbook</a></li>
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">Debugging Guide</a></li>
+                
+                <li><a href="/su25/articles/studying/">Studying Guide</a></li>
+                
+                <li><a href="/su25/articles/composition/">Composition Guide</a></li>
+                
+                <li><a href="/su25/articles/campus-res/">Campus Resources</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="/su25/instructor">Instructors</a></li>
+                
+                <li><a href="/su25/staff">TAs & Tutors</a></li>
+                
+              </ul>
+            </li>
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Lab 4 Solutions
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="lab04.zip" class="label label-outline">lab04.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+<h2>Solution Files</h2>
+
+
+    
+<h1 id="required-questions">Required Questions</h1>
+
+
+<br>
+
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Getting Started Videos<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-1">
+
+
+<h2 id="getting-started-videos" class="no-toc">Getting Started Videos</h2>
+
+
+<p>These videos may provide some helpful direction for tackling the coding
+problems on this assignment.</p>
+
+<blockquote><p>To see these videos, you should be logged into your berkeley.edu email.</p></blockquote>
+
+
+            <iframe width="560" height="315" src="https://youtube.com/embed/videoseries?list=PLyLn37KVScq1HobogFrMtKUFw745i_WF8"
+                frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" aria-label = "c88c-lab4-getstarted"
+                allowfullscreen></iframe><p><a href='https://youtu.be/playlist?list=PLyLn37KVScq1HobogFrMtKUFw745i_WF8'> YouTube link </a></p>
+</div>
+
+
+<h2 id="recursion">Recursion</h2>
+
+
+
+<h3 id="q1-double-eights">Q1: Double Eights</h3>
+
+
+<p>Write a <strong>recursive</strong> function that takes in a positive integer <code>n</code> and determines if its
+digits contain two adjacent <code>8</code>s (that is, two <code>8</code>s right next to each other).</p>
+
+<blockquote><p><strong>Hint:</strong> Start by coming up with a recursive plan: the digits of a number have double eights if either <strong></strong> (think of something that is straightforward to check) or double eights appear in the rest of the digits.</p></blockquote>
+
+<p><strong>Important:</strong> Use recursion; the tests will fail if you use any loops (for, while).</p>
+
+<solution>
+
+<pre><code>def double_eights(n):
+    &quot;&quot;&quot;Returns whether or not n has two digits in row that
+    are the number 8.
+
+    &gt;&gt;&gt; double_eights(1288)
+    True
+    &gt;&gt;&gt; double_eights(880)
+    True
+    &gt;&gt;&gt; double_eights(538835)
+    True
+    &gt;&gt;&gt; double_eights(284682)
+    False
+    &gt;&gt;&gt; double_eights(588138)
+    True
+    &gt;&gt;&gt; double_eights(78)
+    False
+    &gt;&gt;&gt; # ban iteration
+    &gt;&gt;&gt; from construct_check import check
+    &gt;&gt;&gt; check(SOURCE_FILE, &#x27;double_eights&#x27;, [&#x27;While&#x27;, &#x27;For&#x27;])
+    True
+    &quot;&quot;&quot;
+<div class="sol-highlight">    last, second_last = n % 10, n // 10 % 10
+    if last == 8 and second_last == 8:
+        return True
+    elif n &lt; 100:
+        return False
+    return double_eights(n // 10)
+
+    # Alternate solution
+    last, second_last = n % 10, n // 10 % 10
+    if n &lt; 10:
+        return False
+    return (last == 8 and second_last == 8) or double_eights(n // 10)
+
+    # Alternate solution with helper function:
+    def helper(num, prev_eight):
+        if num == 0:
+            return False
+        if num % 10 == 8:
+            if prev_eight:
+                return True
+            return helper(num // 10, True)
+        return helper(num // 10, False)
+    return helper(n, False)</div></code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q double_eights<button id="copy-code-python3ok-qdouble_eights" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qdouble_eights").onclick = () => copyCode('python3 ok -q double_eights', "copy-code-python3ok-qdouble_eights");
+        </script>
+        <br/>
+
+
+<h3 id="q2-summation">Q2: Summation</h3>
+
+
+<p>Write a recursive implementation of <code>summation</code>, which takes a positive
+integer <code>n</code> and a function <code>term</code>. It applies <code>term</code> to every number from <code>1</code>
+to <code>n</code> including <code>n</code> and returns the sum.</p>
+
+<p><strong>Important:</strong> Use recursion; the tests will fail if you use any loops (for, while).</p>
+
+<solution>
+
+<pre><code>def summation(n, term):
+    &quot;&quot;&quot;Return the sum of numbers 1 through n (including n) wíth term applied to each number.
+
+    &gt;&gt;&gt; summation(5, lambda x: x * x * x) # 1^3 + 2^3 + 3^3 + 4^3 + 5^3
+    225
+    &gt;&gt;&gt; summation(9, lambda x: x + 1)     # 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10
+    54
+    &gt;&gt;&gt; summation(5, lambda x: 2**x)      # 2^1 + 2^2 + 2^3 + 2^4 + 2^5
+    62
+    &gt;&gt;&gt; # ban iteration
+    &gt;&gt;&gt; from construct_check import check
+    &gt;&gt;&gt; check(SOURCE_FILE, &#x27;summation&#x27;, [&#x27;While&#x27;, &#x27;For&#x27;])
+    True
+    &quot;&quot;&quot;
+    assert n &gt;= 1
+<div class="sol-highlight">    if n == 1:
+        return term(n)
+    else:
+        return term(n) + summation(n &#x2d; 1, term)</div></code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q summation<button id="copy-code-python3ok-qsummation" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qsummation").onclick = () => copyCode('python3 ok -q summation', "copy-code-python3ok-qsummation");
+        </script>
+        <br/>
+
+
+<h3 id="q3-ten-pairs">Q3: Ten-Pairs</h3>
+
+
+<p>Write a function that takes a positive integer <code>n</code> and returns the
+number of ten-pairs it contains.  A ten-pair is a pair of digits
+within <code>n</code> that sums to 10.</p>
+
+<p>The number 7,823,952 has 3 ten-pairs. The first and fourth digits sum
+to 7+3=10, the second and third digits sum to 8+2=10, and the second
+and last digit sum to 8+2=10.</p>
+
+<p>Important notes:</p>
+
+<ul>
+  <li>A digit can be part of more than one ten-pair.</li>
+  <li>One 5 does not make a ten-pair with itself.</li>
+</ul>
+
+<blockquote><p><em>Recommended</em>: Complete and use the helper function <code>count_digit</code> to calculate
+how many times a digit appears in <code>n</code>.</p></blockquote>
+
+<p><strong>Important:</strong> Use recursion; the tests will fail if you use any loops (for, while).</p>
+
+<solution>
+
+<pre><code>def ten_pairs(n):
+    &quot;&quot;&quot;Return the number of ten&#x2d;pairs within positive integer n.
+
+    &gt;&gt;&gt; ten_pairs(7823952)
+    3
+    &gt;&gt;&gt; ten_pairs(55055)
+    6
+    &gt;&gt;&gt; ten_pairs(9641469)
+    6
+    &gt;&gt;&gt; # ban iteration
+    &gt;&gt;&gt; from construct_check import check
+    &gt;&gt;&gt; check(SOURCE_FILE, &#x27;ten_pairs&#x27;, [&#x27;While&#x27;, &#x27;For&#x27;])
+    True
+    &quot;&quot;&quot;
+<div class="sol-highlight">    if n &lt; 10:
+        return 0
+    else:
+        return ten_pairs(n//10) + count_digit(n//10, 10 &#x2d; n%10)</div>
+def count_digit(n, digit):
+    &quot;&quot;&quot;Return how many times digit appears in n.
+
+    &gt;&gt;&gt; count_digit(55055, 5)
+    4
+    &gt;&gt;&gt; from construct_check import check
+    &gt;&gt;&gt; # ban iteration
+    &gt;&gt;&gt; check(SOURCE_FILE, &#x27;count_digits&#x27;, [&#x27;While&#x27;, &#x27;For&#x27;])
+    True
+    &quot;&quot;&quot;
+<div class="sol-highlight">    if n == 0:
+        return 0
+    else:
+        if n%10 == digit:
+            return count_digit(n//10, digit) + 1
+        else:
+            return count_digit(n//10, digit)</div></code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q ten_pairs<button id="copy-code-python3ok-qten_pairs" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qten_pairs").onclick = () => copyCode('python3 ok -q ten_pairs', "copy-code-python3ok-qten_pairs");
+        </script>
+        <br/>
+
+
+<h2 id="check-your-score-locally">Check Your Score Locally</h2>
+
+<p>You can locally check your score on each question of this assignment by running</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+<p><strong>This does NOT submit the assignment!</strong> When you are satisfied with your score, submit the assignment to Gradescope to receive credit for it.</p>
+
+
+<h1 id="submit-assignment">Submit Assignment</h1>
+
+
+<p>Submit this assignment by uploading any files you've edited <strong>to the appropriate Gradescope assignment.</strong> <a href="../lab00/#submit-with-gradescope">Lab 00</a> has detailed instructions.</p>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#required-questions">Required Questions</a></li>
+  <ul>
+    <li><a href="#recursion">Recursion</a></li>
+    <ul>
+      <li><a href="#q1-double-eights">Q1: Double Eights</a></li>
+      <li><a href="#q2-summation">Q2: Summation</a></li>
+      <li><a href="#q3-ten-pairs">Q3: Ten-Pairs</a></li>
+    </ul>
+    <li><a href="#check-your-score-locally">Check Your Score Locally</a></li>
+  </ul>
+  <li><a href="#submit-assignment">Submit Assignment</a></li>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <!-- <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/weekly">Weekly Schedule</a></li>
+            <li><a href="/office-hours">Office Hours</a></li>
+            <li><a href="/staff">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="/resources">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/articles/studying">Studying Guide</a></li>
+            <li><a href="/articles/debugging">Debugging Guide</a></li>
+            <li><a href="/articles/composition">Composition Guide</a></li>
+            <li><a href="/articles/pair-programming">Pair Programming</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="/articles/about">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/articles/about#assignments">Assignments</a></li>
+            <li><a href="/articles/about#exams">Exams</a></li>
+            <li><a href="/articles/about#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer> -->
+
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/editor/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min'
+      };
+      importScripts('https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
+    <script src="/su25/assets/js/network_storage.js"></script>
+    <script src="/su25/assets/js/code_tabindex.js"></script>
+    <script src="/su25/assets/js/storable.js"></script>
+    <script src="/su25/assets/js/editor.js"></script>
+    <script src="/su25/assets/js/copy-button.js"></script>
+    <script src="/su25/assets/js/env-diagram.js"></script>
+    
+<!-- <script src="/assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>
