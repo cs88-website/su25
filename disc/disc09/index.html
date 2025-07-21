@@ -1,0 +1,483 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="Data C88C: Computational Structures in Data Science" />
+    <meta name="keywords" content ="Computer Science, Programming, Berkeley, EECS" />
+    <meta name="author" content ="Eric Kim" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/su25/assets/js/hl.js"></script>
+    <script src="/su25/assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="/su25/assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+    <link rel="stylesheet" href="/su25/assets/css/style.css">
+    <link rel="stylesheet" href="/su25/assets/css/mono-blue.css">
+    <link rel="icon" href="/su25/assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="/assets/css/disc.css">
+
+
+    <title>
+Discussion 9 | Data C88C Summer 2025
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/su25/">
+            Data C88C
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="/assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="/su25/">Schedule</a></li>
+            
+            <li><a href="/su25/articles/about-c88c/">Syllabus</a></li>
+            
+            <li><a href="https://edstem.org/us/courses/79702/discussion/">Ed</a></li>
+            
+            <li><a href="/su25/office-hours/">Google Calendar</a></li>
+            
+            <li><a href="/su25/articles/contact-c88c/">Contact</a></li>
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Links
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://www.gradescope.com/courses/1053326">Gradescope</a></li>
+                
+                <li><a href="https://bcourses.berkeley.edu/courses/1545181/external_tools/90481">Lecture Recordings</a></li>
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://bcourses.berkeley.edu/courses/1545181/">bCourses</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Resources
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="/su25/resources/">Past Exams & Websites</a></li>
+                
+                <li><a href="https://www.composingprograms.com">Textbook</a></li>
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">Debugging Guide</a></li>
+                
+                <li><a href="/su25/articles/studying/">Studying Guide</a></li>
+                
+                <li><a href="/su25/articles/composition/">Composition Guide</a></li>
+                
+                <li><a href="/su25/articles/campus-res/">Campus Resources</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="/su25/instructor">Instructors</a></li>
+                
+                <li><a href="/su25/staff">TAs & Tutors</a></li>
+                
+              </ul>
+            </li>
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Discussion 9: Trees
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="disc09.pdf" class="label label-outline">disc09.pdf</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<!-- <div class="alert storable-login-status"></div> -->
+
+
+    
+<h1 id="trees">Trees</h1>
+
+
+<p>For a <code>Tree</code> instance <code>t</code>:</p>
+
+<ul>
+  <li>Its root label can be any value, and <code>t.label</code> evaluates to it.</li>
+  <li>Its branches are all <code>Tree</code> instances, and <code>t.branches</code> evaluates to a list of branches, which is a list of <code>Tree</code> instances.</li>
+  <li>It is called a leaf if it has no branches, and <code>t.is_leaf()</code> returns whether <code>t</code> is a leaf.</li>
+  <li>A new <code>Tree</code> with the same root label and branches  can be constructed with <code>Tree(t.label, t.branches)</code>.</li>
+</ul>
+
+<p>Here's an example tree <code>t1</code>, for which its branch <code>t1.branches[1]</code> is <code>t2</code>.</p>
+
+<pre><code class="python">t2 = Tree(5, [Tree(6), Tree(7)])
+t1 = Tree(3, [Tree(4), t2])</code></pre>
+
+
+
+<p><img class="img-responsive center-block" src="assets/example_tree_illustration.png" alt="Example Tree" width="100%" height=""></p>
+
+<p>A path is a sequence of nodes in which each is the parent of the next.</p>
+
+
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Tree Class<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-1">
+
+<p>You don't need to know how the <code>Tree</code> class is implemented in
+order to use it correctly, but here is the implementation from lecture.</p>
+
+<pre><code class="python">class Tree:
+    &quot;&quot;&quot;A tree is a label and a list of branches.&quot;&quot;&quot;
+    def __init__(self, label, branches=[]):
+        self.label = label
+        for branch in branches:
+            assert isinstance(branch, Tree)
+        self.branches = list(branches)
+
+    def is_leaf(self):
+        return not self.branches
+
+    # The rest of the class just determines how trees are displayed.
+
+    def __repr__(self):
+        if self.branches:
+            branch_str = &#x27;, &#x27; + repr(self.branches)
+        else:
+            branch_str = &#x27;&#x27;
+        return &#x27;Tree({0}{1})&#x27;.format(repr(self.label), branch_str)
+
+    def __str__(self):
+        return &#x27;\n&#x27;.join(self.indented())
+
+    def indented(self):
+        lines = []
+        for b in self.branches:
+            for line in b.indented():
+                lines.append(&#x27;  &#x27; + line)
+        return [str(self.label)] + lines</code></pre>
+
+
+</div>
+
+
+<h3 id="q1-min-tree">Q1: Min Tree</h3>
+
+
+<p>What value is bound to <code>result</code>?</p>
+
+<pre><code>get_label = lambda t: t.label
+result = min(max([t1, t2], key=get_label).branches, key=get_label).label</code></pre>
+
+
+
+
+
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        What does key do?<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-2">
+
+<p>Here's a quick refresher on how <code>key</code> functions work with <code>max</code> and <code>min</code>,</p>
+
+<p><code>max(s, key=f)</code> returns the item <code>x</code> in <code>s</code> for which <code>f(x)</code> is largest.</p>
+
+<pre><code class="python">&gt;&gt;&gt; s = [&#x2d;3, &#x2d;5, &#x2d;4, &#x2d;1, &#x2d;2]
+&gt;&gt;&gt; max(s)
+&#x2d;1
+&gt;&gt;&gt; max(s, key=abs)
+&#x2d;5
+&gt;&gt;&gt; max([abs(x) for x in s])
+5</code></pre>
+
+
+
+<p>Therefore, <code>max([t1, t2], key=get_label)</code> returns the tree with the largest label,
+in this case <code>t2</code>.
+</div></p>
+
+<div class="page-break"></div>
+
+
+<h3 id="q2-has-path">Q2: Has Path</h3>
+
+
+<p>Implement <code>has_path</code>, which takes a <code>Tree</code> instance <code>t</code> and a list <code>p</code>. It returns whether
+there is a path from the root of <code>t</code> with labels <code>p</code>. For example, <code>t1</code> has a
+path from its root with labels <code>[3, 5, 6]</code> but not <code>[3, 4, 6]</code> or <code>[5, 6]</code>.</p>
+
+<p><strong>Important</strong>: Before trying to implement this function, discuss these questions
+from lecture about the recursive call of a tree processing function:</p>
+
+<ul>
+  <li>What recursive calls will you make?</li>
+  <li>What type of values do they return?</li>
+  <li>What do the possible return values mean?</li>
+  <li>How can you use those return values to complete your implementation?</li>
+</ul>
+
+<p>If you get stuck, you can view our answers to these questions by clicking the
+hint button below, but <em>please</em> don't do that until your whole group agrees.</p>
+
+
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint: Describing the Recursive Call<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-3">
+<strong>What recursive calls will you make?</strong>
+
+<p>As you usual, you will call <code>has_path</code> on each branch <code>b</code>. You'll make this
+call after comparing <code>p[0]</code> to <code>t.label</code>, and so the second argument to
+<code>has_path</code> will be the rest of <code>p</code>: <code>has_path(b, p[1:])</code>.</p>
+
+<p><strong>What type of values do they return?</strong></p>
+
+<p><code>has_path</code> always returns a <code>bool</code> value: <code>True</code> or <code>False</code>.</p>
+
+<p><strong>What do the possible return values mean?</strong></p>
+
+<p>If <code>has_path(b, p[1:])</code> returns <code>True</code>, then there is a path through branch <code>b</code>
+for which <code>p[1:]</code> are the node labels.</p>
+
+<p><strong>How can you use those return values to complete your implementation?</strong></p>
+
+<p>If you have already checked that <code>t.label</code> is equal to <code>p[0]</code>, then a <code>True</code>
+return value means there is a path through <code>t</code> with labels <code>p</code> using that branch
+<code>b</code>.  A <code>False</code> value means there is no path through that branch, but there
+might be path through a different branch.
+</div></p>
+
+
+            <div class="monaco-storable" id="has_path-input" style="height:504px;"></div>
+            <a href="javascript:void" id="modal-link-has_path-input">Run in 61A Code</a>
+            <div class="modal fade" id="modal-has_path-input" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content" style="padding-bottom: -5px">
+                    <iframe
+                        id="code-iframe-has_path-input"
+                        width="100%"
+                        height="700px"
+                        style="border: none; display:block;"
+                    ></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="storable-status"></div>
+            <script>
+                $(() => activateEditor('def has_path(t, p):\n    &quot;&quot;&quot;Return whether Tree t has a path from the root with labels p.\n\n    &gt;&gt;&gt; t2 = Tree(5, [Tree(6), Tree(7)])\n    &gt;&gt;&gt; t1 = Tree(3, [Tree(4), t2])\n    &gt;&gt;&gt; has_path(t1, [5, 6])        # This path is not from the root of t1\n    False\n    &gt;&gt;&gt; has_path(t2, [5, 6])        # This path is from the root of t2\n    True\n    &gt;&gt;&gt; has_path(t1, [3, 5])        # This path does not go to a leaf, but that&#x27;s ok\n    True\n    &gt;&gt;&gt; has_path(t1, [3, 5, 6])     # This path goes to a leaf\n    True\n    &gt;&gt;&gt; has_path(t1, [3, 4, 5, 6])  # There is no path with these labels\n    False\n    &quot;&quot;&quot;\n    if ____:  # when len(p) is 1\n        return True\n    elif t.label != ____:\n        return False\n    else:\n        "*** YOUR CODE HERE ***"\n\n', "python", "has_path-input"));
+            </script>
+        
+
+<p>If your group needs some guidance, you can click on the hints below, but please
+talk with your group first before reading the hints.</p>
+
+
+        <button id='toggle-4' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint: Base Cases<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-4">
+The first base case should check whether <code>p</code> is a list of length one with the
+label of <code>t</code> as its only element.  The second base case should check whether the
+first element of <code>p</code> matches the label of <code>t</code>.
+</div>
+
+
+        <button id='toggle-5' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint: Recursive Case<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-5">
+When entering the recursive case, your code should already have checked that
+<code>p[0]</code> is equal to <code>t.label</code>, and so all that's left to check is that <code>p[1:]</code>
+contains the labels in a path through one of the branches. One way is with
+this template:
+
+<pre><code>for ____:
+    if ____:
+        return True
+return False</code></pre>
+
+
+</div>
+
+<div class="page-break"></div>
+
+<!-- (dataC88C su25: no attendance checks) -->
+<!-- # Document the Occasion
+
+Please all fill out the <a href="https://go.c88c.org/here">attendance form</a> (one submission per person per week). -->
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#trees">Trees</a></li>
+  <ul>
+    <li><a href="#q1-min-tree">Q1: Min Tree</a></li>
+    <li><a href="#q2-has-path">Q2: Has Path</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <!-- <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/weekly">Weekly Schedule</a></li>
+            <li><a href="/office-hours">Office Hours</a></li>
+            <li><a href="/staff">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="/resources">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/articles/studying">Studying Guide</a></li>
+            <li><a href="/articles/debugging">Debugging Guide</a></li>
+            <li><a href="/articles/composition">Composition Guide</a></li>
+            <li><a href="/articles/pair-programming">Pair Programming</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="/articles/about">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/articles/about#assignments">Assignments</a></li>
+            <li><a href="/articles/about#exams">Exams</a></li>
+            <li><a href="/articles/about#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer> -->
+
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/editor/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min'
+      };
+      importScripts('https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
+    <script src="/su25/assets/js/network_storage.js"></script>
+    <script src="/su25/assets/js/code_tabindex.js"></script>
+    <script src="/su25/assets/js/storable.js"></script>
+    <script src="/su25/assets/js/editor.js"></script>
+    <script src="/su25/assets/js/copy-button.js"></script>
+    <script src="/su25/assets/js/env-diagram.js"></script>
+    
+<!-- <script src="/assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>
