@@ -9,7 +9,8 @@
         "tests/*.py": "ok_test"
     },
     "default_tests": [
-        "label_squarer"
+        "label_squarer",
+        "add_d_leaves"
     ],
     "protocols": [
         "restore",

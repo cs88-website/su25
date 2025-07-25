@@ -223,7 +223,176 @@ that each label is squared.</p>
         </script>
         <br/>
 
-<!-- <include topics/trees/class/medium/add-d-leaves.md> -->
+
+<h3 id="q2-add-leaves">Q2: Add Leaves</h3>
+
+
+<p>Implement <code>add_d_leaves</code>, a function that takes in a <code>Tree</code> instance <code>t</code> and a number <code>v</code>.</p>
+
+<p>We define the depth of a node in <code>t</code> to be the number of edges from the root to that node. The depth of root is therefore 0.</p>
+
+<p>For each node in the tree, you should add <code>d</code> leaves to it, where <code>d</code> is the depth of the node. Every added leaf should have a label of <code>v</code>. If the node at this depth has existing branches, you should add these leaves to the end of that list of branches.</p>
+
+<p>For example, you should be adding 1 leaf with label <code>v</code> to each node at depth 1, 2 leaves to each node at depth 2, and so on.</p>
+
+<p>Here is an example of a tree <code>t</code> (shown on the left) and the result after <code>add_d_leaves</code> is applied with <code>v</code> as 5.
+<img class="img-responsive center-block" src="assets/add_leaves.png" alt="add" width="" height=""></p>
+
+<blockquote><p><strong>Hint:</strong> Use a helper function to keep track of the depth!</p>
+
+<p><strong>Hint:</strong> Be careful about when you add the new leaves to the tree.
+We only want to add leaves to the original nodes in the tree, not to
+the nodes we added.</p></blockquote>
+
+<!-- hack for separate blockquotes -->
+
+<blockquote><p>Take a look at the doctests below and try drawing out the second doctest to visualize how the function is mutating <code>t3</code>.</p></blockquote>
+
+<!-- <code-input add_d_leaves lang:python>
+
+<pre><code>def add_d_leaves(t, v):
+    &quot;&quot;&quot;Add d leaves containing v to each node at every depth d.
+
+    &gt;&gt;&gt; t_one_to_four = Tree(1, [Tree(2), Tree(3, [Tree(4)])])
+    &gt;&gt;&gt; print(t_one_to_four)
+    1
+      2
+      3
+        4
+    &gt;&gt;&gt; add_d_leaves(t_one_to_four, 5)
+    &gt;&gt;&gt; print(t_one_to_four)
+    1
+      2
+        5
+      3
+        4
+          5
+          5
+        5
+
+    &gt;&gt;&gt; t0 = Tree(9)
+    &gt;&gt;&gt; add_d_leaves(t0, 4)
+    &gt;&gt;&gt; t0
+    Tree(9)
+    &gt;&gt;&gt; t1 = Tree(1, [Tree(3)])
+    &gt;&gt;&gt; add_d_leaves(t1, 4)
+    &gt;&gt;&gt; t1
+    Tree(1, [Tree(3, [Tree(4)])])
+    &gt;&gt;&gt; t2 = Tree(2, [Tree(5), Tree(6)])
+    &gt;&gt;&gt; t3 = Tree(3, [t1, Tree(0), t2])
+    &gt;&gt;&gt; print(t3)
+    3
+      1
+        3
+          4
+      0
+      2
+        5
+        6
+    &gt;&gt;&gt; add_d_leaves(t3, 10)
+    &gt;&gt;&gt; print(t3)
+    3
+      1
+        3
+          4
+            10
+            10
+            10
+          10
+          10
+        10
+      0
+        10
+      2
+        5
+          10
+          10
+        6
+          10
+          10
+        10
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</code-input>
+
+ --></p>
+
+<solution>
+
+<pre><code>def add_d_leaves(t, v):
+    &quot;&quot;&quot;Add d leaves containing v to each node at every depth d.
+
+    &gt;&gt;&gt; t_one_to_four = Tree(1, [Tree(2), Tree(3, [Tree(4)])])
+    &gt;&gt;&gt; print(t_one_to_four)
+    1
+      2
+      3
+        4
+    &gt;&gt;&gt; add_d_leaves(t_one_to_four, 5)
+    &gt;&gt;&gt; print(t_one_to_four)
+    1
+      2
+        5
+      3
+        4
+          5
+          5
+        5
+
+    &gt;&gt;&gt; t0 = Tree(9)
+    &gt;&gt;&gt; add_d_leaves(t0, 4)
+    &gt;&gt;&gt; t0
+    Tree(9)
+    &gt;&gt;&gt; t1 = Tree(1, [Tree(3)])
+    &gt;&gt;&gt; add_d_leaves(t1, 4)
+    &gt;&gt;&gt; t1
+    Tree(1, [Tree(3, [Tree(4)])])
+    &gt;&gt;&gt; t2 = Tree(2, [Tree(5), Tree(6)])
+    &gt;&gt;&gt; t3 = Tree(3, [t1, Tree(0), t2])
+    &gt;&gt;&gt; print(t3)
+    3
+      1
+        3
+          4
+      0
+      2
+        5
+        6
+    &gt;&gt;&gt; add_d_leaves(t3, 10)
+    &gt;&gt;&gt; print(t3)
+    3
+      1
+        3
+          4
+            10
+            10
+            10
+          10
+          10
+        10
+      0
+        10
+      2
+        5
+          10
+          10
+        6
+          10
+          10
+        10
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q add_d_leaves<button id="copy-code-python3ok-qadd_d_leaves" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qadd_d_leaves").onclick = () => copyCode('python3 ok -q add_d_leaves', "copy-code-python3ok-qadd_d_leaves");
+        </script>
+        <br/>
 
 
 <h2 id="check-your-score-locally">Check Your Score Locally</h2>
@@ -259,6 +428,7 @@ that each label is squared.</p>
     <li><a href="#trees">Trees</a></li>
     <ul>
       <li><a href="#q1-square">Q1: Square</a></li>
+      <li><a href="#q2-add-leaves">Q2: Add Leaves</a></li>
     </ul>
     <li><a href="#check-your-score-locally">Check Your Score Locally</a></li>
   </ul>
