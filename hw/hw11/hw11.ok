@@ -1,0 +1,28 @@
+{
+    "name": "Homework 11",
+    "endpoint": "cal/cs88/su25/hw11",
+    "src": [
+        "hw11.py",
+        "data.sql",
+        "hw11.sql"
+    ],
+    "tests": {
+        "hw*.py": "doctest",
+        "tests/*.py": "ok_test"
+    },
+    "default_tests": [
+        "cycle",
+        "make_onion",
+        "matchmaker",
+        "smallest-int-having"
+    ],
+    "protocols": [
+        "restore",
+        "file_contents",
+        "unlock",
+        "grading",
+        "analytics",
+        "help",
+        "backup"
+    ]
+}

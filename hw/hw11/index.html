@@ -1,0 +1,653 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="Data C88C: Computational Structures in Data Science" />
+    <meta name="keywords" content ="Computer Science, Programming, Berkeley, EECS" />
+    <meta name="author" content ="Eric Kim" />
+    <!-- CHANGED CAREFUL -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/su25/assets/js/hl.js"></script>
+    <script src="/su25/assets/js/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="/su25/assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+    <link rel="stylesheet" href="/su25/assets/css/style.css">
+    <link rel="stylesheet" href="/su25/assets/css/mono-blue.css">
+    <link rel="icon" href="/su25/assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="/assets/css/hw.css">
+
+
+    <title>
+Homework 11 | Data C88C Summer 2025
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section" aria-label="Toggle Navigation Bar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/su25/">
+            Data C88C
+            <!-- <img style="max-width:60px; margin-top: -20px;" class="logo" src="/assets/images/logo.png"/> -->
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+
+            
+            <li><a href="/su25/">Schedule</a></li>
+            
+            <li><a href="/su25/articles/about-c88c/">Syllabus</a></li>
+            
+            <li><a href="https://edstem.org/us/courses/79702/discussion/">Ed</a></li>
+            
+            <li><a href="/su25/office-hours/">Google Calendar</a></li>
+            
+            <li><a href="/su25/articles/contact-c88c/">Contact</a></li>
+            
+
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Links
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="https://www.gradescope.com/courses/1053326">Gradescope</a></li>
+                
+                <li><a href="https://bcourses.berkeley.edu/courses/1545181/external_tools/90481">Lecture Recordings</a></li>
+                
+                <li><a href="https://pythontutor.com/cp/composingprograms.html">Python Tutor</a></li>
+                
+                <li><a href="https://bcourses.berkeley.edu/courses/1545181/">bCourses</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Resources
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="/su25/resources/">Past Exams & Websites</a></li>
+                
+                <li><a href="https://www.composingprograms.com">Textbook</a></li>
+                
+                <li><a href="https://drive.google.com/file/d/1O72u0ml65pibcjz-PXKpqeJDKaVqQ3D8/view">Debugging Guide</a></li>
+                
+                <li><a href="/su25/articles/studying/">Studying Guide</a></li>
+                
+                <li><a href="/su25/articles/composition/">Composition Guide</a></li>
+                
+                <li><a href="/su25/articles/campus-res/">Campus Resources</a></li>
+                
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                <li><a href="/su25/instructor">Instructors</a></li>
+                
+                <li><a href="/su25/staff">TAs & Tutors</a></li>
+                
+              </ul>
+            </li>
+            
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Homework 11: Final Review
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="hw11.zip" class="label label-outline">hw11.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<p><em>Due by 11:59pm on Tuesday, August 5</em></p>
+
+
+
+
+
+<h2>Instructions</h2>
+
+<p>Download <a href="hw11.zip">hw11.zip</a>. Inside the archive, you will find two files called
+<a href="hw11.py">hw11.py</a> and <a href="hw11.sql">hw11.sql</a>, along with a copy of the <code>ok</code> autograder.</p>
+
+<p><strong>Submission:</strong> When you are done, submit the assignment by uploading all code files you've edited to Gradescope. You may submit more than once before the deadline; only the
+final submission will be scored. Check that you have successfully submitted
+your code on Gradescope.  See <a
+  href="/su25/lab/lab00">Lab 0</a> for more instructions on
+submitting assignments.</p>
+
+<p><strong>Using Ok:</strong> If you have any questions about using Ok, please
+refer to <a href="/su25/articles/using-ok">this guide.</a>
+
+
+
+<p><strong>Grading:</strong> Homework is graded based on
+correctness. Each incorrect problem will decrease the total score by one point.
+<strong>This homework is out of 2 points.</strong>
+
+
+
+
+    
+<h1 id="end-of-semester-feedback-and-course-evaluations">End of Semester Feedback and Course Evaluations</h1>
+
+
+<p>Please fill out the two surveys listed below:</p>
+
+<ul>
+  <li><a href="https://go.c88c.org/end-sem-survey">Data C88C end-of-semester survey</a></li>
+  <li><a href="https://course-evaluations.berkeley.edu/">UC Berkeley course evaluations</a></li>
+</ul>
+
+<p>If 65% or more students complete <strong><em>both</em></strong> surveys by <strong>Friday August 15th at 11:59 PM</strong>, then everyone will receive 0.5 point of extra credit! If this goal is not met, nobody will receive the extra point.</p>
+
+<p>If 75% or more students complete <strong><em>both</em></strong> surveys by <strong>Friday August 15th at 11:59 PM</strong>, then everyone will receive 0.5 additional point of extra credit.</p>
+
+
+<h1 id="required-questions">Required Questions</h1>
+
+
+
+<h3 id="q1-i-heard-you-liked-functions">Q1: I Heard You Liked Functions...</h3>
+
+
+<p>Define a function <code>cycle</code> that takes in three functions <code>f1</code>, <code>f2</code>, and
+<code>f3</code>, as arguments. <code>cycle</code> will return another function <code>g</code> that should
+take in an integer argument <code>n</code> and return another function <code>h</code>. That
+final function <code>h</code> should take in an argument <code>x</code> and cycle through
+applying <code>f1</code>, <code>f2</code>, and <code>f3</code> to <code>x</code>, depending on what <code>n</code>
+was. Here's what the final function <code>h</code> should do to <code>x</code> for a few
+values of <code>n</code>:</p>
+
+<ul>
+  <li><code>n = 0</code>, return <code>x</code></li>
+  <li><code>n = 1</code>, apply <code>f1</code> to <code>x</code>, or return <code>f1(x)</code></li>
+  <li><code>n = 2</code>, apply <code>f1</code> to <code>x</code> and then <code>f2</code> to the result of that, or
+  return <code>f2(f1(x))</code></li>
+  <li><code>n = 3</code>, apply <code>f1</code> to <code>x</code>, <code>f2</code> to the result of applying <code>f1</code>,
+  and then <code>f3</code> to the result of applying <code>f2</code>, or <code>f3(f2(f1(x)))</code></li>
+  <li><code>n = 4</code>, start the cycle again applying <code>f1</code>, then <code>f2</code>, then <code>f3</code>,
+  then <code>f1</code> again, or <code>f1(f3(f2(f1(x))))</code></li>
+  <li>And so forth.</li>
+</ul>
+
+<blockquote><p><em>Hint</em>: most of the work goes inside the most nested function.</p>
+
+<p><em>Hint</em>: How can you utilize the <code>%</code> operator to achieve the cyclic behavior?
+Try computing <code>n % 3</code> for all integers <code>n</code> from 0 to 12. What pattern do you notice?</p></blockquote>
+
+<solution>
+
+<pre><code>def cycle(f1, f2, f3):
+    &quot;&quot;&quot;Returns a function that is itself a higher&#x2d;order function.
+
+    &gt;&gt;&gt; def add1(x):
+    ...     return x + 1
+    &gt;&gt;&gt; def times2(x):
+    ...     return x * 2
+    &gt;&gt;&gt; def add3(x):
+    ...     return x + 3
+    &gt;&gt;&gt; my_cycle = cycle(add1, times2, add3)
+    &gt;&gt;&gt; identity = my_cycle(0)
+    &gt;&gt;&gt; identity(5)
+    5
+    &gt;&gt;&gt; add_one_then_double = my_cycle(2)
+    &gt;&gt;&gt; add_one_then_double(1)
+    4
+    &gt;&gt;&gt; do_all_functions = my_cycle(3)
+    &gt;&gt;&gt; do_all_functions(2)
+    9
+    &gt;&gt;&gt; do_more_than_a_cycle = my_cycle(4)
+    &gt;&gt;&gt; do_more_than_a_cycle(2)
+    10
+    &gt;&gt;&gt; do_two_cycles = my_cycle(6)
+    &gt;&gt;&gt; do_two_cycles(1)
+    19
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q cycle<button id="copy-code-python3ok-qcycle" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qcycle").onclick = () => copyCode('python3 ok -q cycle', "copy-code-python3ok-qcycle");
+        </script>
+        <br/>
+
+<h3 id="q2-making-onions">Q2: Making Onions</h3>
+
+
+<p>Write a function <code>make_onion</code> that takes in two one-argument functions, <code>f</code> and
+<code>g</code>. It returns a function that takes in three arguments: <code>x</code>, <code>y</code>, and
+<code>limit</code>. The returned function returns <code>True</code> if it is possible to reach <code>y</code>
+from <code>x</code> using up to <code>limit</code> calls to <code>f</code> and <code>g</code>, and <code>False</code> otherwise.</p>
+
+<p>For example, if <code>f</code> adds 1 and <code>g</code> doubles, then it is possible to reach 25 from
+5 in four calls: <code>f(g(g(f(5))))</code>.</p>
+
+<solution>
+
+<pre><code>def make_onion(f, g):
+    &quot;&quot;&quot;Return a function can_reach(x, y, limit) that returns
+    whether some call expression containing only f, g, and x with
+    up to limit calls will give the result y.
+
+    &gt;&gt;&gt; up = lambda x: x + 1
+    &gt;&gt;&gt; double = lambda y: y * 2
+    &gt;&gt;&gt; can_reach = make_onion(up, double)
+    &gt;&gt;&gt; can_reach(5, 25, 4)      # 25 = up(double(double(up(5))))
+    True
+    &gt;&gt;&gt; can_reach(5, 25, 3)      # Not possible
+    False
+    &gt;&gt;&gt; can_reach(1, 1, 0)      # 1 = 1
+    True
+    &gt;&gt;&gt; add_ing = lambda x: x + &quot;ing&quot;
+    &gt;&gt;&gt; add_end = lambda y: y + &quot;end&quot;
+    &gt;&gt;&gt; can_reach_string = make_onion(add_ing, add_end)
+    &gt;&gt;&gt; can_reach_string(&quot;cry&quot;, &quot;crying&quot;, 1)      # &quot;crying&quot; = add_ing(&quot;cry&quot;)
+    True
+    &gt;&gt;&gt; can_reach_string(&quot;un&quot;, &quot;unending&quot;, 3)     # &quot;unending&quot; = add_ing(add_end(&quot;un&quot;))
+    True
+    &gt;&gt;&gt; can_reach_string(&quot;peach&quot;, &quot;folding&quot;, 4)   # Not possible
+    False
+    &quot;&quot;&quot;
+    def can_reach(x, y, limit):
+        if limit &lt; 0:
+            return ____
+        elif x == y:
+            return ____
+        else:
+            return can_reach(____, ____, limit &#x2d; 1) or can_reach(____, ____, limit &#x2d; 1)
+    return can_reach</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q make_onion<button id="copy-code-python3ok-qmake_onion" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qmake_onion").onclick = () => copyCode('python3 ok -q make_onion', "copy-code-python3ok-qmake_onion");
+        </script>
+        <br/>
+
+
+<h2 id="survey-data">Survey Data</h2>
+
+
+<p>In a past semester of this course, we asked the students to take a survey. In this lab, we will interact with the results of the survey by using SQL queries to see if we can find interesting trends in the data. Data scientists often use languages like SQL to do Exploratory Data Analysis (EDA).</p>
+
+<p>First, take a look at <code>data.sql</code> and examine the table defined in it. Note
+its structure.</p>
+
+<p>You will only be working with the <code>students</code> table in this file.
+<!-- You will be working with the two tables in this file. --></p>
+
+<p>The <code>students</code> table is the main
+results of the survey. Each column represents a different
+question from the survey, except for the first column, which is the time
+of when the result was submitted. This time is a unique identifier for
+each of the rows in the table.</p>
+
+
+
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+          
+  <tr>
+    <th>Column Name</th>
+    <th>Question</th>
+  </tr>
+  <tr>
+    <td><code>time</code></td>
+    <td>The unique timestamp that identifies the submission</td>
+  </tr>
+  <tr>
+    <td><code>color</code></td>
+    <td>What is your favorite color?</td>
+  </tr>
+  <tr>
+    <td><code>seven</code></td>
+    <td>Choose the number 7 below.<br>Options: <br><ul> <li>7</li> <li>Choose this option instead</li> <li>seven</li> <li>the number 7 below.</li> <li>I find this question condescending</li> </ul></td>
+  </tr>
+  <tr>
+    <td><code>song</code></td>
+    <td>If you could listen to only one of these songs for the rest of your life, which would it be? <br> Options: <br><ul> <li>"The Other Side Of Paradise" by Glass Animals</li><li>"Glimpse of Us" by Joji</li><li>"Leave the Door Open" by Anderson .Paak, Bruno Mars, and Silk Sonic</li><li>"Clair de Lune" by Claude Debussy</li><li>"Bohemian Rhapsody" by Queen</li><li>"Dancing Queen" by ABBA</li><li>"All that Jazz" from Chicago</li><li>"good 4 u" by Olivia Rodrigo</li><li>"Starman" by David Bowie</li><li>"Palette" by IU</li><li>"I Won't Say (I'm In Love)" from Hercules</li> </ul></td>
+  </tr>
+  <tr>
+    <td><code>date</code></td>
+    <td>Pick a day of the year!</td>
+  </tr>
+  <tr>
+    <td><code>pet</code></td>
+    <td>If you could have any animal in the world as a pet, what would it be?</td>
+  </tr>
+  <tr>
+    <td><code>smallest</code></td>
+    <td>Try to guess the smallest unique positive INTEGER that anyone will put!</td>
+  </tr>
+
+          </table>
+        </div>
+        
+
+
+
+<!-- The second table is <code>numbers</code>, which is the results from the survey in which students could select more
+  than one option from the numbers listed, which ranged from 0 to 10 and included
+  2021, 2022, 9000, and 9001. Each row has a time (which is again a unique
+  identifier) and has the value <code>&#x27;True&#x27;</code> if the student selected the column or <code>&#x27;False&#x27;</code>
+  if the student did not.
+  The column names in this table are the following strings, referring to each possible
+  number: <code>&#x27;0&#x27;</code>, <code>&#x27;1&#x27;</code>, <code>&#x27;2&#x27;</code>, <code>&#x27;4&#x27;</code>, <code>&#x27;5&#x27;</code>, <code>&#x27;6&#x27;</code>, <code>&#x27;7&#x27;</code>, <code>&#x27;8&#x27;</code>, <code>&#x27;9&#x27;</code>, <code>&#x27;10&#x27;</code>, <code>&#x27;2021&#x27;</code>, <code>&#x27;2022&#x27;</code>, <code>&#x27;9000&#x27;</code>, <code>&#x27;9001&#x27;</code>
+
+Since the survey was anonymous, we used the timestamp that a survey was
+submitted as a unique identifier.  A time in <code>students</code> matches up with a time
+in <code>numbers</code>. For example, a row in <code>students</code> whose <code>time</code> value is
+<code>&quot;11/17/2021 10:52:40&quot;</code> matches up with the row in <code>numbers</code> whose <code>time</code>
+value is <code>&quot;11/17/2021 10:52:40&quot;</code>. These entries come from the same Google form
+submission and thus belong to the same student. -->
+
+<br>
+
+<!-- > <em>Note</em>: If you are looking for your personal response within the data, you may
+
+<blockquote><p>have noticed that some of your answers are slightly different from what you
+had inputted. In order to make SQLite accept our data, and to optimize for as
+many matches as possible during our joins, we did the following things to
+clean up the data:</p>
+
+<ul>
+  <li><code>color</code> and <code>pet</code>: We converted all the strings to be completely lowercase.</li>
+  <li>For some of the more "free-spirited" responses, we escaped the special
+  characters so that they could be properly parsed. --></li>
+</ul></blockquote>
+
+<p>You will write all of your solutions in the starter file <code>hw11.sql</code> provided. As with other
+labs, you can test your solutions with OK. In addition, you can use either of
+the following commands:</p>
+
+<pre><code>python3 sqlite_shell.py &lt; hw11.sql
+python3 sqlite_shell.py &#x2d;&#x2d;init hw11.sql</code></pre>
+
+
+<h3 id="q3-matchmaker-matchmaker">Q3: Matchmaker, Matchmaker</h3>
+
+
+<p>Did you take this course with the hope of finding a new group of friends? Well you're in luck!
+With all this data in hand, it's easy for us to find your perfect match. If two
+students want the same pet and have the same taste in music, they are clearly meant
+to be friends! In order to provide some more information for the potential pair
+to converse about, let's include the favorite colors of the two individuals as well!</p>
+
+<p>In order to match up students, you will have to do a join on the <code>students</code> table
+with itself. When you do a join, SQLite will match every single row with every single
+other row, so make sure you do not match anyone with themselves, or match any given pair
+twice!</p>
+
+<blockquote><p><strong>Important Note:</strong> When pairing the first and second person, make sure that
+the first person responded first (i.e. they have an earlier <code>time</code>). This is
+to ensure your output matches our tests.</p>
+
+<p><em>Hint:</em> When joining table names where column names are the same, use dot
+notation to distinguish which columns are from which table:
+<code>[table_name].[column name]</code>. This sometimes may get verbose, so it’s
+stylistically better to give tables an alias using the <code>AS</code> keyword.
+The syntax for this is as follows:</p>
+
+<pre><code>SELECT &lt;[alias1].[column1], [alias2].[column2]...&gt;
+    FROM &lt;[table1] AS [alias1], [table2] AS [alias2]...&gt; ...</code></pre></blockquote>
+
+<p>Write a SQL query to create a table that has 4 columns:</p>
+
+<ul>
+  <li>The shared preferred <code>pet</code> of the pair</li>
+  <li>The shared favorite <code>song</code> of the pair</li>
+  <li>The favorite <code>color</code> of the first person</li>
+  <li>The favorite <code>color</code> of the second person</li>
+</ul>
+
+<solution>
+
+<pre><code>CREATE TABLE matchmaker AS
+  SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q matchmaker<button id="copy-code-python3ok-qmatchmaker" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qmatchmaker").onclick = () => copyCode('python3 ok -q matchmaker', "copy-code-python3ok-qmatchmaker");
+        </script>
+        <br/>
+
+<!--  -->
+
+<h3 id="q4-the-smallest-unique-positive-integer">Q4: The Smallest Unique Positive Integer</h3>
+
+
+<p>Write an SQL query to create a table with the columns <code>time</code> and <code>smallest</code> which contains the timestamp
+for each submission that made a unique guess for the smallest unique positive integer -
+that is, only one person put that number for their guess of the smallest unique integer. Also include their
+guess in the output (this is the value in the <code>smallest</code> column).</p>
+
+<blockquote><p><em>Hint:</em> Think about what attribute you need to <code>GROUP BY</code>. Which groups do we want to keep after this?
+We can filter this out using a <code>HAVING</code> clause.</p>
+
+<p>You should not compute this in your final answer, but if you're curious,
+the submission with the timestamp corresponding to the minimum value of <code>smallest</code> in this table
+is the timestamp of the submission with the smallest unique positive integer!</p></blockquote>
+
+<solution>
+
+<pre><code>CREATE TABLE smallest_int_having AS
+  SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q smallest-int-having<button id="copy-code-python3ok-qsmallest-int-having" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qsmallest-int-having").onclick = () => copyCode('python3 ok -q smallest-int-having', "copy-code-python3ok-qsmallest-int-having");
+        </script>
+        <br/>
+
+<!--
+Since the data is really long, we put it in a separate data.sql file
+by using the <code>include</code> parameter in the HW 11 BUILD file.
+Then we must read it into the hw11.sql file.
+-->
+
+
+<h2 id="check-your-score-locally">Check Your Score Locally</h2>
+
+<p>You can locally check your score on each question of this assignment by running</p>
+
+<pre><code>python3 ok &#x2d;&#x2d;score</code></pre>
+
+<p><strong>This does NOT submit the assignment!</strong> When you are satisfied with your score, submit the assignment to Gradescope to receive credit for it.</p>
+
+<h1 id="submit-assignment">Submit Assignment</h1>
+
+
+<p>Submit this assignment by uploading any files you've edited <strong>to the appropriate Gradescope assignment.</strong> <a href="/su25/lab/lab00">Lab 00</a> has detailed instructions.</p>
+
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#end-of-semester-feedback-and-course-evaluations">End of Semester Feedback and Course Evaluations</a></li>
+  <li><a href="#required-questions">Required Questions</a></li>
+  <ul>
+    <li><a href="#q1-i-heard-you-liked-functions">Q1: I Heard You Liked Functions...</a></li>
+    <li><a href="#q2-making-onions">Q2: Making Onions</a></li>
+  </ul>
+  <ul>
+    <li><a href="#survey-data">Survey Data</a></li>
+    <ul>
+      <li><a href="#q3-matchmaker-matchmaker">Q3: Matchmaker, Matchmaker</a></li>
+      <li><a href="#q4-the-smallest-unique-positive-integer">Q4: The Smallest Unique Positive Integer</a></li>
+    </ul>
+    <li><a href="#check-your-score-locally">Check Your Score Locally</a></li>
+  </ul>
+  <li><a href="#submit-assignment">Submit Assignment</a></li>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <!-- <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/weekly">Weekly Schedule</a></li>
+            <li><a href="/office-hours">Office Hours</a></li>
+            <li><a href="/staff">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="/resources">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/articles/studying">Studying Guide</a></li>
+            <li><a href="/articles/debugging">Debugging Guide</a></li>
+            <li><a href="/articles/composition">Composition Guide</a></li>
+            <li><a href="/articles/pair-programming">Pair Programming</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="/articles/about">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="/articles/about#assignments">Assignments</a></li>
+            <li><a href="/articles/about#exams">Exams</a></li>
+            <li><a href="/articles/about#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer> -->
+
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/editor/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min'
+      };
+      importScripts('https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.5/js/jsplumb.min.js"></script>
+    <script src="/su25/assets/js/network_storage.js"></script>
+    <script src="/su25/assets/js/code_tabindex.js"></script>
+    <script src="/su25/assets/js/storable.js"></script>
+    <script src="/su25/assets/js/editor.js"></script>
+    <script src="/su25/assets/js/copy-button.js"></script>
+    <script src="/su25/assets/js/env-diagram.js"></script>
+    
+<!-- <script src="/assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  </body>
+</html>
