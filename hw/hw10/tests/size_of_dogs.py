@@ -21,7 +21,7 @@ test = {
       'ordered': False,
       'scored': True,
       'setup': r"""
-      sqlite> .read hw10.sql
+      sqlite> .read hw06.sql
       """,
       'teardown': '',
       'type': 'sqlite'
