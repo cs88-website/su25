@@ -530,7 +530,119 @@ CREATE TABLE sizes AS
 </solution>
 
 
-<h3 id="q1-room-sharing">Q1: Room Sharing</h3>
+<h3 id="q1-big-courses">Q1: Big Courses</h3>
+
+
+<p>Create a <code>big</code> table with one column:</p>
+
+<ul>
+  <li><code>course</code> (strings): The name of a course</li>
+</ul>
+
+<p>Include only courses where the total number of seats across all their final exam rooms is at least 1,000. Each course should appear in its own row.</p>
+
+<p>Your query should work correctly for any data that might appear in the <code>finals</code>
+and <code>sizes</code> table, but for the example above the result should be:</p>
+
+<pre><code>+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+
+| course  |
++&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+
+| 61A     |
+| 61B     |
+| 61C     |
++&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+</code></pre>
+
+
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint: Template<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-3">
+
+<pre><code>SELECT _____ FROM _____ WHERE _____ GROUP BY _____ HAVING _____;</code></pre>
+
+
+
+<ol>
+  <li>Use <code>FROM</code> and <code>WHERE</code> to combine the information in the <code>finals</code> and <code>sizes</code> tables.</li>
+  <li>Use <code>GROUP BY</code> and <code>HAVING</code> to create one group for each course that has at least 1,000 seats.</li>
+  <li>Use <code>SELECT</code> to put the name of the course in the output.
+  </div></li>
+</ol>
+
+<solution>
+
+<pre><code>CREATE TABLE big AS
+  SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
+</code></pre>
+
+</solution
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q big<button id="copy-code-python3ok-qbig" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qbig").onclick = () => copyCode('python3 ok -q big', "copy-code-python3ok-qbig");
+        </script>
+        <br/>
+
+
+<h3 id="q2-seats-remaining">Q2: Seats Remaining</h3>
+
+
+<p>Create a <code>remaining</code> table with two columns:</p>
+
+<ul>
+  <li><code>course</code> (strings): The name of a course</li>
+  <li><code>remaining</code> (numbers): The total number of seats in all rooms used for that course excluding the room with the largest number of seats</li>
+</ul>
+
+<p>Include one row for each course and for each course, sum the seats from all but the largest room.</p>
+
+<p>Your query should work correctly for any data that might appear in the <code>finals</code>
+and <code>sizes</code> table, but for the example above the result should be:</p>
+
+<pre><code>+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+
+| course    | remaining |
++&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+
+| 10        | 0         |
+| 61A       | 1800      |
+| 61B       | 800       |
+| 61C       | 540       |
+| 70        | 0         |
++&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+</code></pre>
+
+
+        <button id='toggle-4' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Hint: Template<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-4">
+
+<pre><code>SELECT course, _____ AS remaining
+  FROM _____ WHERE _____ GROUP BY _____;</code></pre>
+
+
+
+<ol>
+  <li>Use <code>FROM</code> and <code>WHERE</code> to combine the information in the <code>finals</code> and <code>sizes</code> tables.</li>
+  <li>Use <code>GROUP BY</code> to create one group for each course.</li>
+  <li>Use <code>SELECT</code> to compute the total number of seats in all final rooms for that course except the largest one.
+  </div></li>
+</ol>
+
+<solution>
+
+<pre><code>CREATE TABLE remaining AS
+  SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q remaining<button id="copy-code-python3ok-qremaining" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qremaining").onclick = () => copyCode('python3 ok -q remaining', "copy-code-python3ok-qremaining");
+        </script>
+        <br/>
+
+
+<h3 id="q3-room-sharing">Q3: Room Sharing</h3>
 
 
 <p>Create a <code>sharing</code> table with two columns:</p>
@@ -558,10 +670,10 @@ and <code>sizes</code> table, but for the example above the result should be:</p
 +&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+</code></pre>
 
 
-        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        <button id='toggle-5' class='btn btn-outline btn-lg alwaystoggle toggle'>
         Hint: Template<noscript> (enable JavaScript)</noscript>
         </button>
-        <div class="solution toggle-3">
+        <div class="solution toggle-5">
 
 <pre><code>SELECT _.course, COUNT(DISTINCT _____) AS shared
   FROM finals AS a, finals AS b
@@ -591,7 +703,7 @@ and <code>sizes</code> table, but for the example above the result should be:</p
         <br/>
 
 
-<h3 id="q2-two-rooms">Q2: Two Rooms</h3>
+<h3 id="q4-two-rooms">Q4: Two Rooms</h3>
 
 
 <p>Create a <code>pairs</code> table with one column:</p>
@@ -625,10 +737,10 @@ and <code>sizes</code> table, but for the example above the result should be:</p
 <p><code>&#x27;one plus two is &#x27; || (1 + 2)</code></p>
 
 
-        <button id='toggle-4' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        <button id='toggle-6' class='btn btn-outline btn-lg alwaystoggle toggle'>
         Hint: Template<noscript> (enable JavaScript)</noscript>
         </button>
-        <div class="solution toggle-4">
+        <div class="solution toggle-6">
 
 <pre><code>  SELECT _____ || &#x27; and &#x27; || _____ || &#x27; together have &#x27; || (_____) || &#x27; seats&#x27; AS rooms
     FROM sizes AS a, sizes AS b WHERE _____
@@ -654,118 +766,6 @@ and <code>sizes</code> table, but for the example above the result should be:</p
 <p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q pairs<button id="copy-code-python3ok-qpairs" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
         <script>
         document.getElementById("copy-code-python3ok-qpairs").onclick = () => copyCode('python3 ok -q pairs', "copy-code-python3ok-qpairs");
-        </script>
-        <br/>
-
-
-<h3 id="q3-optional-big-courses">Q3: (OPTIONAL) Big Courses</h3>
-
-
-<p>Create a <code>big</code> table with one column:</p>
-
-<ul>
-  <li><code>course</code> (strings): The name of a course</li>
-</ul>
-
-<p>Include only courses where the total number of seats across all their final exam rooms is at least 1,000. Each course should appear in its own row.</p>
-
-<p>Your query should work correctly for any data that might appear in the <code>finals</code>
-and <code>sizes</code> table, but for the example above the result should be:</p>
-
-<pre><code>+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+
-| course  |
-+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+
-| 61A     |
-| 61B     |
-| 61C     |
-+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+</code></pre>
-
-
-        <button id='toggle-5' class='btn btn-outline btn-lg alwaystoggle toggle'>
-        Hint: Template<noscript> (enable JavaScript)</noscript>
-        </button>
-        <div class="solution toggle-5">
-
-<pre><code>SELECT _____ FROM _____ WHERE _____ GROUP BY _____ HAVING _____;</code></pre>
-
-
-
-<ol>
-  <li>Use <code>FROM</code> and <code>WHERE</code> to combine the information in the <code>finals</code> and <code>sizes</code> tables.</li>
-  <li>Use <code>GROUP BY</code> and <code>HAVING</code> to create one group for each course that has at least 1,000 seats.</li>
-  <li>Use <code>SELECT</code> to put the name of the course in the output.
-  </div></li>
-</ol>
-
-<solution>
-
-<pre><code>CREATE TABLE big AS
-  SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
-</code></pre>
-
-</solution
-
-<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q big<button id="copy-code-python3ok-qbig" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
-        <script>
-        document.getElementById("copy-code-python3ok-qbig").onclick = () => copyCode('python3 ok -q big', "copy-code-python3ok-qbig");
-        </script>
-        <br/>
-
-
-<h3 id="q4-optional-seats-remaining">Q4: (OPTIONAL) Seats Remaining</h3>
-
-
-<p>Create a <code>remaining</code> table with two columns:</p>
-
-<ul>
-  <li><code>course</code> (strings): The name of a course</li>
-  <li><code>remaining</code> (numbers): The total number of seats in all rooms used for that course excluding the room with the largest number of seats</li>
-</ul>
-
-<p>Include one row for each course and for each course, sum the seats from all but the largest room.</p>
-
-<p>Your query should work correctly for any data that might appear in the <code>finals</code>
-and <code>sizes</code> table, but for the example above the result should be:</p>
-
-<pre><code>+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+
-| course    | remaining |
-+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+
-| 10        | 0         |
-| 61A       | 1800      |
-| 61B       | 800       |
-| 61C       | 540       |
-| 70        | 0         |
-+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;+</code></pre>
-
-
-        <button id='toggle-6' class='btn btn-outline btn-lg alwaystoggle toggle'>
-        Hint: Template<noscript> (enable JavaScript)</noscript>
-        </button>
-        <div class="solution toggle-6">
-
-<pre><code>SELECT course, _____ AS remaining
-  FROM _____ WHERE _____ GROUP BY _____;</code></pre>
-
-
-
-<ol>
-  <li>Use <code>FROM</code> and <code>WHERE</code> to combine the information in the <code>finals</code> and <code>sizes</code> tables.</li>
-  <li>Use <code>GROUP BY</code> to create one group for each course.</li>
-  <li>Use <code>SELECT</code> to compute the total number of seats in all final rooms for that course except the largest one.
-  </div></li>
-</ol>
-
-<solution>
-
-<pre><code>CREATE TABLE remaining AS
-  SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
-</code></pre>
-
-</solution>
-
-<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q remaining<button id="copy-code-python3ok-qremaining" class="inline-copy-button"><div class="copy-tooltip"><span>Copy</span></div>✂️</a></code></pre>
-        <script>
-        document.getElementById("copy-code-python3ok-qremaining").onclick = () => copyCode('python3 ok -q remaining', "copy-code-python3ok-qremaining");
         </script>
         <br/>
 
@@ -801,10 +801,10 @@ and <code>sizes</code> table, but for the example above the result should be:</p
     <li><a href="#sql">SQL</a></li>
     <li><a href="#final-exam-rooms">Final Exam Rooms</a></li>
     <ul>
-      <li><a href="#q1-room-sharing">Q1: Room Sharing</a></li>
-      <li><a href="#q2-two-rooms">Q2: Two Rooms</a></li>
-      <li><a href="#q3-optional-big-courses">Q3: (OPTIONAL) Big Courses</a></li>
-      <li><a href="#q4-optional-seats-remaining">Q4: (OPTIONAL) Seats Remaining</a></li>
+      <li><a href="#q1-big-courses">Q1: Big Courses</a></li>
+      <li><a href="#q2-seats-remaining">Q2: Seats Remaining</a></li>
+      <li><a href="#q3-room-sharing">Q3: Room Sharing</a></li>
+      <li><a href="#q4-two-rooms">Q4: Two Rooms</a></li>
     </ul>
     <li><a href="#check-your-score-locally">Check Your Score Locally</a></li>
   </ul>
